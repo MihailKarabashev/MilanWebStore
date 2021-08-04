@@ -1,8 +1,9 @@
-﻿using MilanWebStore.Data.Common.Models;
-using System;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using System;
+
+    using MilanWebStore.Data.Common.Models;
+
     public class Image : BaseDeletableModel<string>
     {
         public Image()

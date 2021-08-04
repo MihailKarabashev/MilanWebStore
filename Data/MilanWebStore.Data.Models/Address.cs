@@ -1,8 +1,9 @@
-﻿using MilanWebStore.Data.Common.Models;
-using System.Collections.Generic;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using System.Collections.Generic;
+
+    using MilanWebStore.Data.Common.Models;
+
     public class Address : BaseModel<int>
     {
         public Address()

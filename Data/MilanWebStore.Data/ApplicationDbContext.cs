@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using MilanWebStore.Data.Common.Models;
-    using MilanWebStore.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using MilanWebStore.Data.Common.Models;
+    using MilanWebStore.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +24,38 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ParentCategory> ParentCategories { get; set; }
+
+        public DbSet<ChildCategory> ChildCategories { get; set; }
+
+        public DbSet<ParentChildCategory> ParentChildCategories { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
+
+        public DbSet<News> News { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Size> Sizes { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
+
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<ProductVariant> ProductVariants { get; set; }
+
+        public DbSet<ShoppingCartProduct> ShoppingCartProducts { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -47,8 +78,10 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Needed for Identity models configuration
+
             base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             this.ConfigureUserIdentityRelations(builder);
 

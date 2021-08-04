@@ -1,10 +1,9 @@
-﻿using MilanWebStore.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using System.Collections.Generic;
+
+    using MilanWebStore.Data.Common.Models;
+
     public class ShoppingCart : BaseDeletableModel<int>
     {
         public ShoppingCart()

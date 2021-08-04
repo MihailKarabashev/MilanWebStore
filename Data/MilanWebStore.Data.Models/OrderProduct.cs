@@ -1,7 +1,7 @@
-﻿using MilanWebStore.Data.Common.Models;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using MilanWebStore.Data.Common.Models;
+
     public class OrderProduct : BaseModel<int>
     {
         public int ProductId { get; set; }

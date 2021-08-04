@@ -1,10 +1,7 @@
-﻿using MilanWebStore.Data.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using MilanWebStore.Data.Common.Models;
+
     public class ProductVariant : BaseDeletableModel<int>
     {
         public int ProductId { get; set; }

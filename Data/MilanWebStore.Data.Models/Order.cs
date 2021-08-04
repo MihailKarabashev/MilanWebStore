@@ -1,10 +1,10 @@
-﻿using MilanWebStore.Data.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MilanWebStore.Data.Models
+﻿namespace MilanWebStore.Data.Models
 {
+    using System.Collections.Generic;
+
+    using MilanWebStore.Data.Common.Models;
+    using MilanWebStore.Data.Models.Enums;
+
     public class Order : BaseDeletableModel<int>
     {
         public Order()
