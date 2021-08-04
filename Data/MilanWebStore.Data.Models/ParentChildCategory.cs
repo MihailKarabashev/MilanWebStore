@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using MilanWebStore.Data.Common.Models;
 
 namespace MilanWebStore.Data.Models
 {
-    class ParentChildCategory
+    public class ParentChildCategory : BaseDeletableModel<int>
     {
+        public ParentCategory ParentCategory { get; set; }
+
+        public int ParentCateogryId { get; set; }
+
+        public ChildCategory ChildCategory { get; set; }
+
+        public int ChildCategoryId { get; set; }
     }
 }

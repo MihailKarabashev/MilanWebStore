@@ -1,10 +1,21 @@
-﻿using System;
+﻿using MilanWebStore.Data.Common.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MilanWebStore.Data.Models
 {
-    class ChildCategory
+    public class ChildCategory : BaseDeletableModel<int>
     {
+        public ChildCategory()
+        {
+            this.Products = new HashSet<Product>();
+            this.ParentChildCategory = new HashSet<ParentChildCategory>();
+        }
+
+        public string Name { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<ParentChildCategory> ParentChildCategory { get; set; }
+
     }
 }
