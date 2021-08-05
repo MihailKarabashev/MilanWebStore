@@ -1,0 +1,79 @@
+﻿<header>
+    <a href="#!" class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </a>
+    <a href="index.html" class="spur-logo"><i class="fas fa-bolt"></i> <span>Settings</span></a>
+</header>
+
+<nav class="dash-nav-list">
+    <a asp-controller="Dashboard" asp-action="Index" class="dash-nav-item">
+        <i class="fas fa-home"></i> Dashboard
+    </a>
+    <div class="dash-nav-dropdown">
+        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+            <i class="fas fa-chart-bar"></i> Products
+        </a>
+        <div class="dash-nav-dropdown-menu">
+            <a asp-area="Administration" asp-controller="Products" asp-action="All" class="dash-nav-dropdown-item">All</a>
+            <a asp-area="Administration" asp-controller="Products" asp-action="Create" class="dash-nav-dropdown-item">Create</a>
+        </div>
+    </div>
+    <div class="dash-nav-dropdown ">
+        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+            <i class="fas fa-cube"></i> Categories
+        </a>
+        <div class="dash-nav-dropdown-menu">
+            <div class="dash-nav-dropdown ">
+                <a href="#" class="dash-nav-dropdown-item dash-nav-dropdown-toggle">Gender Categories</a>
+                <div class="dash-nav-dropdown-menu">
+                    <a asp-area="Administration" asp-controller="ParentCategories" asp-action="Create" class="dash-nav-dropdown-item">Create</a>
+                    <a asp-area="Administration" asp-controller="ParentCategories" asp-action="All" class="dash-nav-dropdown-item">All</a>
+                </div>
+            </div>
+            <div class="dash-nav-dropdown ">
+                <a href="#" class="dash-nav-dropdown-item dash-nav-dropdown-toggle">Cloth Categories</a>
+                <div class="dash-nav-dropdown-menu">
+                    <a asp-area="Administration" asp-controller="ChildCategories" asp-action="Create" class="dash-nav-dropdown-item">Create</a>
+                    <a asp-area="Administration" asp-controller="ChildCategories" asp-action="All" class="dash-nav-dropdown-item">All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dash-nav-dropdown ">
+        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+            <i class="fas fa-cube"></i> Product Variants
+        </a>
+        <div class="dash-nav-dropdown-menu">
+            <div class="dash-nav-dropdown ">
+                <a href="#" class="dash-nav-dropdown-item dash-nav-dropdown-toggle">Product  Sizes</a>
+                <div class="dash-nav-dropdown-menu">
+                    <a asp-area="Administration" asp-controller="Sizes" asp-action="Create" class="dash-nav-dropdown-item">Create</a>
+                    <a asp-area="Administration" asp-controller="Sizes" asp-action="All" class="dash-nav-dropdown-item">All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dash-nav-dropdown ">
+        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+            <i class="fas fa-cube"></i> Orders
+        </a>
+        <div class="dash-nav-dropdown-menu">
+            <div class="dash-nav-dropdown ">
+                <a href="#" class="dash-nav-dropdown-item dash-nav-dropdown-toggle">Order Details</a>
+                <div class="dash-nav-dropdown-menu">
+                    <a asp-area="Administration" asp-controller="Orders" asp-action="Index" class="dash-nav-dropdown-item">Clients Orders</a>
+                    <a asp-area="Administration" asp-controller="Orders" asp-action="Delivered" class="dash-nav-dropdown-item">Delivered Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dash-nav-dropdown">
+        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+            <i class="fas fa-info"></i> AC MILAN STORE
+        </a>
+        <div class="dash-nav-dropdown-menu">
+            <a asp-area="" asp-controller="Home" asp-action="Index" target="_blank" class="dash-nav-dropdown-item">Home</a>
+            <a href="http://hackerthemes.com" target="_blank" class="dash-nav-dropdown-item">My GitHub</a>
+        </div>
+    </div>
+</nav>

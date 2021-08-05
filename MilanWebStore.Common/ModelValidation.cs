@@ -114,5 +114,27 @@
         {
             public const int TitleMaxLenght = 30;
         }
+
+        public static class User
+        {
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
+
+            public const int FirstNameMinLength = 3;
+            public const int FirstnameMaxLength = 25;
+
+            public const int LastNameMinLength = 3;
+            public const int LastNameMaxLength = 30;
+
+            public const string EmailError = "Please enter valid email address";
+            public const string PasswordError = "The {0} must be at least {2} and at max {1} characters long.";
+            public const string ConfirmPasswordError = "The password and confirmation password do not match.";
+
+            public const string RememberMeDispayName = "Remember me ?";
+            public const string ConfirmPasswordDispayName = "Confirm password ?";
+            public const string FirstNameDispayName = "First name";
+            public const string LastNameDispayName = "Last name";
+
+        }
     }
 }
