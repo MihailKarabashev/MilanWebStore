@@ -9,6 +9,10 @@
         {
             public const int NameMinLength = 2;
             public const int NameMaxLength = 60;
+
+            public const string ShippingMethodError = "ShippingMethod is required.";
+            public const string PaymentMethodError = "PaymentMethod is required.";
+
         }
 
         public static class Address
@@ -18,6 +22,11 @@
 
             public const int StreetMinLenght = 3;
             public const int StreetMaxLenght = 30;
+
+            public const string CityDispayName = "City";
+            public const string StreeDispayName = "Street";
+            public const string ZipCodeDispayName = "PostCode";
+
         }
 
         public static class Pay
