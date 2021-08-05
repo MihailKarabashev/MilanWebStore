@@ -51,6 +51,19 @@
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = this.configuration["FacebookAuthSettings:AppId"];
+                    facebookOptions.AppSecret = this.configuration["FacebookAuthSettings:AppSecret"];
+                });
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = this.configuration["GoogleAuthSettings:ClientId"];
+                googleOptions.ClientSecret = this.configuration["GoogleAuthSettings:ClientSecret"];
+            });
+
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
