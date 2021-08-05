@@ -1,7 +1,7 @@
 ﻿namespace MilanWebStore.Services.Data
 {
     using System.Collections.Generic;
-
+    using System.Linq;
     using MilanWebStore.Data.Common.Repositories;
     using MilanWebStore.Data.Models;
     using MilanWebStore.Services.Data.Contracts;

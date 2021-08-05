@@ -7,7 +7,7 @@
     using AutoMapper;
     using MilanWebStore.Common.ValidationAttributes;
     using MilanWebStore.Services.Mapping;
-
+    using MilanWebStore.Web.ViewModels.Sizes;
     using static MilanWebStore.Common.ModelValidation;
     using static MilanWebStore.Common.ModelValidation.Product;
 
@@ -54,7 +54,7 @@
 
         public IEnumerable<ProductVariantDetails> ProductVariants { get; set; }
 
-        public IEnumerable<ProductSizeDetails> ProductSizes { get; set; }
+        public IEnumerable<SizeViewModel> ProductSizes { get; set; }
 
         public IEnumerable<ProductChildCategoryDetails> ChildCategories { get; set; }
 

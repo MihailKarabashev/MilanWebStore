@@ -12,4 +12,3 @@
         Task DeleteAsync(int favoriteProductId);
     }
 }
-}
