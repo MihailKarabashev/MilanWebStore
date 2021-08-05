@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MilanWebStore.Services.Data.Contracts;
 
     public class Startup
     {
@@ -65,6 +66,22 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IChildCategoriesService, ChildCategoriesService>();
+            services.AddTransient<IProductVariantsService, ProductVariantsService>();
+            services.AddTransient<IParentCategoriesService, ParentCategoriesService>();
+            services.AddTransient<IShoppingCartsService, ShoppingCartsService>();
+            services.AddTransient<IAddressesService, AddressesService>();
+            services.AddTransient<IProductsService, ProductsService>();
+            services.AddTransient<IFavoriteProductsService, FavoriteProductsService>();
+            services.AddTransient<ISizesService, SizesService>();
+            services.AddTransient<IPaymentsService, PaymentsService>();
+            services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<INavBarService, NavBarService>();
+            services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IVotesService, VotesService>();
+            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
