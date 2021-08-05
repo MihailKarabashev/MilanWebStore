@@ -1,0 +1,63 @@
+﻿@model ProductInputModel
+@{
+    this.ViewData["Title"] = "Create Product - Admin";
+}
+
+
+<div class="card spur-card">
+    <div class="card-header">
+        <div class="spur-card-icon">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="spur-card-title"> Create New Product </div>
+    </div>
+    <div class="card-body ">
+        <form asp-area="Administration" asp-controller="Products" asp-action="Create" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountPrice"></label>
+                <input asp-for="DiscountPrice" class="form-control" />
+                <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ChildCategoryId"></label>
+                <select class="form-control" asp-for="@Model.ChildCategoryId" asp-items="@Model.ChildCategories.Select(x=> new SelectListItem(x.Name , x.Id.ToString()))">
+                </select>
+                <span asp-validation-for="@Model.ChildCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ParentCategoryId"></label>
+                <select class="form-control" asp-for="@Model.ParentCategoryId" asp-items="@Model.ParentCategories.Select(x=>new SelectListItem(x.Name, x.Id.ToString()))">
+                </select>
+                <span asp-validation-for="@Model.ParentCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.SizeId"></label>
+                <select class="form-control" asp-for="@Model.SizeId" asp-items="@Model.ProductSizes.Select(x=>new SelectListItem(x.Name, x.Id.ToString()))">
+                </select>
+                <span asp-validation-for="@Model.SizeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Images"></label>
+                <input asp-for="Images" class="form-control" />
+                <span asp-validation-for="Images" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-danger">Create</button>
+        </form>
+    </div>
+</div>
