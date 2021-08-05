@@ -13,6 +13,9 @@
             public const string ShippingMethodError = "ShippingMethod is required.";
             public const string PaymentMethodError = "PaymentMethod is required.";
 
+            public const string PaymentMethodDispay = "Payment method";
+            public const string ShippingMethodDispay = "Shipping method";
+
         }
 
         public static class Address

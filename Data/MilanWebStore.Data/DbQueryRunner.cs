@@ -6,6 +6,9 @@
     using MilanWebStore.Data.Common;
 
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Data.Common;
+    using System.Data;
 
     public class DbQueryRunner : IDbQueryRunner
     {
@@ -19,6 +22,32 @@
         public Task RunQueryAsync(string query, params object[] parameters)
         {
             return this.Context.Database.ExecuteSqlRawAsync(query, parameters);
+        }
+
+        public List<T> RawSqlQuery<T>(string query, Func<DbDataReader, T> map)
+        {
+            using (var context = this.Context)
+            {
+                using (var command = context.Database.GetDbConnection().CreateCommand())
+                {
+                    command.CommandText = query;
+                    command.CommandType = CommandType.Text;
+
+                    context.Database.OpenConnection();
+
+                    using (var result = command.ExecuteReader())
+                    {
+                        var entities = new List<T>();
+
+                        while (result.Read())
+                        {
+                            entities.Add(map(result));
+                        }
+
+                        return entities;
+                    }
+                }
+            }
         }
 
         public void Dispose()
