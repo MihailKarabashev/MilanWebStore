@@ -134,6 +134,21 @@
             public const string ConfirmPasswordDispayName = "Confirm password ?";
             public const string FirstNameDispayName = "First name";
             public const string LastNameDispayName = "Last name";
+            public const string CurrentPasswordDispayName = "Current password";
+            public const string NewPasswordDispayName = "New password";
+
+        }
+
+        public static class Index
+        {
+            public const string EmailError = "Please enter valid email address";
+            public const string PhoneError = "Please enter valid phone number";
+
+            public const string PhoneDisplayName = "Phone number";
+            public const string EmaileDisplayName = "Email address";
+            public const string FirstNameDispayName = "First name";
+            public const string LastNameDispayName = "Last name";
+            public const string UsernameDispayName = "Username";
 
         }
     }
