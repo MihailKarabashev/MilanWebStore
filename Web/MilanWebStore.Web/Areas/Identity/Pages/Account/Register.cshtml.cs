@@ -1,115 +1,178 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using MilanWebStore.Data.Models;
-
-namespace MilanWebStore.Web.Areas.Identity.Pages.Account
+﻿namespace MilanWebStore.Web.Areas.Identity.Pages.Account
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Text.Encodings.Web;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.Extensions.Logging;
+    using MilanWebStore.Common;
+    using MilanWebStore.Data.Models;
+    using MilanWebStore.Services.Data.Contracts;
+    using MilanWebStore.Web.Areas.Identity.Pages.Account.InputModels;
+    using MilanWebStore.Web.Helpers;
+    using MilanWebStore.Web.ViewModels.ShoppingCarts;
+
     [AllowAnonymous]
+#pragma warning disable SA1649 // File name should match first type name
     public class RegisterModel : PageModel
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<RegisterModel> logger;
+        private readonly IEmailSender emailSender;
+        private readonly IShoppingCartsService shoppingCartService;
+        private readonly IWebHostEnvironment enviroment;
+        private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IShoppingCartsService shoppingCartService,
+            IWebHostEnvironment enviroment)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
+            this.emailSender = emailSender;
+            this.shoppingCartService = shoppingCartService;
+            this.enviroment = enviroment;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public RegisterInputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputModel
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            if (!this.User.Identity.IsAuthenticated)
+            {
+                this.ReturnUrl = returnUrl;
+                this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                return this.Page();
+            }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
-        }
-
-        public async Task OnGetAsync(string returnUrl = null)
-        {
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            return this.Redirect("/");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+            returnUrl = returnUrl ?? this.Url.Content("~/");
+            this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var user = await this.CreateUserAsync(this.Input, $"{this.enviroment.WebRootPath}");
+
+                var result = await this.userManager.CreateAsync(user, this.Input.Password);
+
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    this.logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
+
+                    var callbackUrl = this.Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                        values: new
+                        {
+                            area = "Identity",
+                            userId = user.Id,
+                            code = code,
+                            returnUrl = returnUrl,
+                        },
+                        protocol: this.Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await this.emailSender.SendEmailAsync(this.Input.Email, "Confirm your email",
+#pragma warning disable SA1117
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+#pragma warning restore SA1117
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    var cart = SessionHelper.GetObjectFromJson<List<ShoppingCartProductsViewModel>>(this.HttpContext.Session, GlobalConstants.ShoppingCartKey);
+                    if (cart != null)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        foreach (var product in cart)
+                        {
+                            await this.shoppingCartService.AddProductToShoppingCartAsync(product.Id, this.Input.Email, product.Quantity);
+                        }
+
+                        this.HttpContext.Session.Remove(GlobalConstants.ShoppingCartKey);
+                    }
+
+                    if (this.userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        await this.signInManager.SignInAsync(user, isPersistent: false);
+                        return this.LocalRedirect(returnUrl);
                     }
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    this.ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+            return this.Page();
+        }
+
+
+        private async Task<ApplicationUser> CreateUserAsync(RegisterInputModel input, string imagePath)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = input.Email,
+                Email = input.Email,
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                ShoppingCart = new ShoppingCart(),
+                Images = new List<Image>(),
+            };
+
+            Directory.CreateDirectory($"{imagePath}/images/users");
+
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbImage = new Image
+                {
+                    ApplicationUserId = user.Id,
+                    Extention = extension,
+                };
+                user.Images.Add(dbImage);
+
+                var physicalPath = $"{imagePath}/images/users/{dbImage.Id}.{extension}";
+                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
+            }
+
+            return user;
         }
     }
 }
