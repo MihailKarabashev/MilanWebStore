@@ -22,6 +22,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using MilanWebStore.Services.Data.Contracts;
+    using System;
 
     public class Startup
     {
@@ -40,6 +41,15 @@
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = new TimeSpan(0, 4, 0, 0);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.Configure<CookiePolicyOptions>(
                 options =>
