@@ -1,0 +1,30 @@
+﻿@model ChildCategoryInputModel
+@{
+    this.ViewData["Title"] = "Create Cloth Category";
+}
+<div class="card spur-card">
+    <div class="card-header">
+        <div class="spur-card-icon">
+            <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="spur-card-title"> Create New Cloth Category </div>
+    </div>
+    <div class="card-body ">
+        <form asp-area="Administration" asp-controller="ChildCategories" asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentCategoryId"></label>
+                <select class="form-control" asp-for="ParentCategoryId" asp-items="@Model.ParentCategories.Select(x=>new SelectListItem(x.Name, x.Id.ToString()))">
+                </select>
+                <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-danger">Create</button>
+        </form>
+    </div>
+</div>
+
