@@ -1,18 +1,10 @@
 ﻿namespace MilanWebStore.Web
 {
+    using System;
     using System.Reflection;
 
-    using MilanWebStore.Data;
-    using MilanWebStore.Data.Common;
-    using MilanWebStore.Data.Common.Repositories;
-    using MilanWebStore.Data.Models;
-    using MilanWebStore.Data.Repositories;
-    using MilanWebStore.Data.Seeding;
-    using MilanWebStore.Services.Data;
-    using MilanWebStore.Services.Mapping;
-    using MilanWebStore.Services.Messaging;
-    using MilanWebStore.Web.ViewModels;
-
+    using Hangfire;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -21,8 +13,18 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MilanWebStore.Data;
+    using MilanWebStore.Data.Common;
+    using MilanWebStore.Data.Common.Repositories;
+    using MilanWebStore.Data.Models;
+    using MilanWebStore.Data.Repositories;
+    using MilanWebStore.Data.Seeding;
+    using MilanWebStore.Services.Data;
     using MilanWebStore.Services.Data.Contracts;
-    using System;
+    using MilanWebStore.Services.Mapping;
+    using MilanWebStore.Services.Messaging;
+    using MilanWebStore.Web.Filters;
+    using MilanWebStore.Web.ViewModels;
 
     public class Startup
     {
@@ -76,6 +78,12 @@
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
+
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -105,10 +113,24 @@
             services.AddTransient<IVotesService, VotesService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
+
+            services.AddHangfire(
+             config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                 .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
+                     this.configuration.GetConnectionString("DefaultConnection"),
+                     new SqlServerStorageOptions
+                     {
+                         CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                         QueuePollInterval = TimeSpan.Zero,
+                         UseRecommendedIsolationLevel = true,
+                         UsePageLocksOnDequeue = true,
+                         DisableGlobalLocks = true,
+                     }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager manager)
         {
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -131,6 +153,9 @@
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithRedirects("/Home/NotFound404?statusCode={0}");
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -140,12 +165,22 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireDashboard(
+                    "/Hangfire",
+                    new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
+
+            app.UseHangfireServer();
+            manager.AddOrUpdate<NewsService>("Scrape", x => x.Scrape(), "*/2 * * * *");
+
+
             app.UseEndpoints(
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
+
+                        endpoints.MapHangfireDashboard();
                     });
         }
     }
