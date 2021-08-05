@@ -18,9 +18,8 @@
         {
             await this.commentService.RemoveAsync(id);
 
-            return this.RedirectToAction(
-                nameof(Web.Controllers.ProductsController.ById),
-                new { area = string.Empty, categoryId = categoryId, id = productId });
+            return this.RedirectToAction("ById", "Products", new { area = string.Empty, id = productId , categoryId = categoryId});
+
         }
     }
 }
