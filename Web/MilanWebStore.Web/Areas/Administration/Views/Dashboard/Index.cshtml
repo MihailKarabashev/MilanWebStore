@@ -1,7 +1,223 @@
-﻿@model MilanWebStore.Web.ViewModels.Administration.Dashboard.IndexViewModel
+﻿@model List<StatisticViewModel>
 @{
-    this.ViewData["Title"] = "Admin dashboard";
+    this.ViewData["Title"] = "Admin Dashboard";
+    var count = 1;
 }
 
-<h1>@this.ViewData["Title"]</h1>
-Settings: @this.Model.SettingsCount
+
+<main class="dash-content">
+    <div class="container-fluid">
+        <h1 class="dash-title">WELCOME TO ADMIN DASHBOARD</h1>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card spur-card">
+                    <div class="card-header">
+                        <div class="spur-card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="spur-card-title">TOP 5 BEST SELLING PRODUCTS</div>
+                    </div>
+                    <div id="piechart" style="width: 700px; height: 400px;"></div>
+                </div>
+            </div>
+
+            <div class="col-xl-6">
+                <div class="card spur-card">
+                    <div class="card-header">
+                        <div class="spur-card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="spur-card-title">TOP 5 CATEGORIES BY PRODUCTS COUNT</div>
+                    </div>
+                    <div id="pie" style="width: 700px; height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card spur-card">
+                    <div class="card-header">
+                        <div class="spur-card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="spur-card-title">TOP 5 MOST COMMENTED PRODUCTS</div>
+
+                    </div>
+                    <div id="piechart_3d" style="width: 700px; height: 400px;"></div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card spur-card">
+                    <div class="card-header">
+                        <div class="spur-card-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="spur-card-title">Latest Registered Users</div>
+                    </div>
+                    <div class="card-body ">
+                        <table class="table table-in-card">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Registered On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@(count++)</th>
+                                        <td>@user.FirstName</td>
+                                        <td>@user.LastName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Date.ToString("dddd, dd MMMM yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            console.log('ffff');
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Administration/Dashboard/ProductsWithMostOrders',
+                    contentType: 'application/json',
+                    success: function (chartsdata) {
+
+                        var Data = chartsdata.jsonList;
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Name');
+                        data.addColumn('number', 'Quantity');
+
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].name, Data[i].quantity]);
+                        }
+
+                        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                        chart.draw(data,
+                            {
+                                title: "TOP 5 BEST SELLING PRODUCTS AC MIALN STORE",
+                                position: "top",
+                                fontsize: "50px",
+                            });
+
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+            })
+
+        }
+    </script>
+
+
+
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Administration/Dashboard/ProductsByCommentsCount',
+                    contentType: 'application/json',
+                    success: function (chartsdata) {
+
+                        var Data = chartsdata.jsonList;
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Name');
+                        data.addColumn('number', 'CommentsCount');
+
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].productName, Data[i].commentsCount]);
+                        }
+
+
+                        var options = {
+                            title: 'TOP 5 MOST COMMENTED PRODUCTS AC MILAN STORE',
+                            is3D: true,
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                        chart.draw(data, options);
+
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+            })
+
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChartSlice);
+
+        function drawChartSlice() {
+
+
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Administration/Dashboard/CategoriesByProductsCount',
+                    contentType: 'application/json',
+                    success: function (chartsdata) {
+
+                        var Data = chartsdata.jsonList;
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Name');
+                        data.addColumn('number', 'ProductsCount');
+
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].categoryName, Data[i].productsCount]);
+                        }
+
+
+                        var options = {
+                            title: 'TOP 5 CATEGORIES BY PRODUCTS COUNT AC MILAN STORE',
+                            is3D: true,
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('pie'));
+                        chart.draw(data, options);
+
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
+            })
+        }
+    </script>
+}
+
