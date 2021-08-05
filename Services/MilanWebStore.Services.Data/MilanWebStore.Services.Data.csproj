@@ -21,7 +21,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MilanWebStore.Data.Common\MilanWebStore.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\MilanWebStore.Data.Models\MilanWebStore.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\MilanWebStore.Web.ViewModels\MilanWebStore.Web.ViewModels.csproj" />
     <ProjectReference Include="..\MilanWebStore.Services.Mapping\MilanWebStore.Services.Mapping.csproj" />
+    <ProjectReference Include="..\MilanWebStore.Services\MilanWebStore.Services.csproj" />
   </ItemGroup>
 
 </Project>

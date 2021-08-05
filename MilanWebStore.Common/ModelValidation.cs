@@ -1,5 +1,4 @@
-﻿
-namespace MilanWebStore.Common
+﻿namespace MilanWebStore.Common
 {
     public static class ModelValidation
     {
