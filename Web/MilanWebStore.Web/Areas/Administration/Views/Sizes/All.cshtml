@@ -1,0 +1,49 @@
+﻿@model AllSizesViewModel
+
+@{
+    this.ViewData["Title"] = "All Sizes - Admin";
+    var counter = 1;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card spur-card">
+            <div class="card-header">
+                <div class="spur-card-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <div class="spur-card-title">All Sizes</div>
+            </div>
+            <div class="card-body ">
+                <table class="table table-hover table-in-card">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var size in Model.Sizes)
+                        {
+                            <tr>
+                                <td>@(counter++)</td>
+                                <td>@size.Name</td>
+
+                                <td>
+                                    <a asp-controller="Sizes" asp-action="Edit" asp-route-id="@size.Id" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                                </td>
+                                <td>
+                                    <a asp-controller="Sizes" asp-action="Delete" asp-route-id="@size.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
