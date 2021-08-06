@@ -1,0 +1,83 @@
+﻿@model AllFavoriteProductsViewModel
+@{
+    this.ViewData["Title"] = "Favorite products";
+}
+
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <a asp-controller="Products" asp-action="All" asp-route-pageNumber="1">Shop</a>
+                    <span>Favorite Products</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (this.Model.Favorites.Count() == 0)
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Favorite products not found!</h1>
+        <p class="lead"> You don't placed any favorite products yet.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-danger btn-lg" asp-controller="Home" asp-action="Index" role="button">Home</a>
+            <a class="btn btn-danger btn-lg" asp-controller="Favorites" asp-action="Index" role="button">Shop Now</a>
+        </p>
+    </div>
+}
+else
+{
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th class="p-name">Product Name</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var favorite in Model.Favorites)
+                                {
+                                    <tr>
+                                        <td class="cart-pic">
+                                            <a asp-controller="Products" asp-action="ById" asp-route-id="@favorite.ProductId"
+                                               asp-route-categoryId="@favorite.ParentCategoryId">
+                                                <img src="@favorite.ProductImageUrl" alt="@favorite.ProductName">
+                                            </a>
+                                        </td>
+                                        <td class="cart-title">
+                                            <h5>@favorite.ProductName</h5>
+                                        </td>
+                                        <td class="p-price">$@favorite.Price</td>
+
+                                        @*<td class="close-td">
+                                                <a class="btn btn-danger" asp-controller="Favorites" asp-action="Delete" asp-route-id="@favorite.Id">
+                                                    <i class="ti-close"></i>
+                                                </a>
+                                            </td>*@
+                                        <td>
+                                            <a asp-controller="Products" asp-action="ById" asp-route-id="@favorite.ProductId" asp-route-categoryId="@favorite.ParentCategoryId" class="btn btn-primary"><i class="far fa-eye"></i></a>
+                                            <a asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@favorite.ProductId" asp-route-quantity="1" class="btn btn-success"><i class="fas fa-shopping-cart"></i></a>
+                                            <a asp-controller="Favorites" asp-action="Delete" asp-route-id="@favorite.Id" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
