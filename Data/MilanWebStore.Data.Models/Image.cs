@@ -1,7 +1,7 @@
 ﻿namespace MilanWebStore.Data.Models
 {
     using System;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using MilanWebStore.Data.Common.Models;
 
     public class Image : BaseDeletableModel<string>
@@ -17,6 +17,7 @@
 
         public int? ProductId { get; set; }
 
+        [ForeignKey(nameof(ProductId))]
         public virtual Product Product { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }

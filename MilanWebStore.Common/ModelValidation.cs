@@ -131,7 +131,7 @@
             public const string ConfirmPasswordError = "The password and confirmation password do not match.";
 
             public const string RememberMeDispayName = "Remember me ?";
-            public const string ConfirmPasswordDispayName = "Confirm password ?";
+            public const string ConfirmPasswordDispayName = "Confirm password";
             public const string FirstNameDispayName = "First name";
             public const string LastNameDispayName = "Last name";
             public const string CurrentPasswordDispayName = "Current password";

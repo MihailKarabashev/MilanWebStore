@@ -61,7 +61,7 @@
 
             .ForMember(x => x.Quantity, y => y.MapFrom(x => x.ShoppingCartProducts.FirstOrDefault().Quantity))
 
-            .ForMember(x => x.AverageValue, y => y.MapFrom(x => x.Votes.Average(x => x.Value)))
+            .ForMember(x => x.AverageValue, y => y.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(x => x.Value)))
 
             .ForMember(x => x.CommentsCount, y => y.MapFrom(c => c.Comments.Count()));
         }

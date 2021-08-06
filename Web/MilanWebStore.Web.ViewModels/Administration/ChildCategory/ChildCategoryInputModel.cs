@@ -13,7 +13,7 @@
         public int Id { get; set; }
 
         [Required(ErrorMessage = EmptyFieldLengthError)]
-        [StringLength(NameMinLength, MinimumLength = NameMaxLength, ErrorMessage = NameLengthError)]
+        //[StringLength(NameMinLength, MinimumLength = NameMaxLength)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = EmptyFieldLengthError)]

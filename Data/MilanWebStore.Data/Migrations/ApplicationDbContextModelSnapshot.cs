@@ -338,7 +338,6 @@ namespace MilanWebStore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -866,7 +865,6 @@ namespace MilanWebStore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -968,8 +966,7 @@ namespace MilanWebStore.Data.Migrations
                     b.HasOne("MilanWebStore.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Comments")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MilanWebStore.Data.Models.Product", "Product")
                         .WithMany("Comments")
@@ -1135,8 +1132,7 @@ namespace MilanWebStore.Data.Migrations
                     b.HasOne("MilanWebStore.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Votes")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MilanWebStore.Data.Models.Product", "Product")
                         .WithMany("Votes")

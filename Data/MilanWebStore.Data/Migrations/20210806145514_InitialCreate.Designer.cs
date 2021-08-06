@@ -10,7 +10,7 @@ using MilanWebStore.Data;
 namespace MilanWebStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210806110402_InitialCreate")]
+    [Migration("20210806145514_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -340,7 +340,6 @@ namespace MilanWebStore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -868,7 +867,6 @@ namespace MilanWebStore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -970,8 +968,7 @@ namespace MilanWebStore.Data.Migrations
                     b.HasOne("MilanWebStore.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Comments")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MilanWebStore.Data.Models.Product", "Product")
                         .WithMany("Comments")
@@ -1137,8 +1134,7 @@ namespace MilanWebStore.Data.Migrations
                     b.HasOne("MilanWebStore.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Votes")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MilanWebStore.Data.Models.Product", "Product")
                         .WithMany("Votes")

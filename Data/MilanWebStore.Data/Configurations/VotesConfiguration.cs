@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MilanWebStore.Common;
-using MilanWebStore.Data.Models;
-
-namespace MilanWebStore.Data.Configurations
+﻿namespace MilanWebStore.Data.Configurations
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using MilanWebStore.Common;
+    using MilanWebStore.Data.Models;
+
     public class VotesConfiguration : IEntityTypeConfiguration<Vote>
     {
         public void Configure(EntityTypeBuilder<Vote> vote)
@@ -17,14 +17,12 @@ namespace MilanWebStore.Data.Configurations
                  .HasOne(v => v.Product)
                  .WithMany(p => p.Votes)
                  .HasForeignKey(v => v.ProductId)
-                 .IsRequired()
                  .OnDelete(DeleteBehavior.Restrict);
 
             vote
                  .HasOne(v => v.ApplicationUser)
                  .WithMany(u => u.Votes)
                  .HasForeignKey(v => v.ApplicationUserId)
-                 .IsRequired()
                  .OnDelete(DeleteBehavior.Restrict);
         }
     }

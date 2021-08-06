@@ -12,8 +12,6 @@
             childCategory.Property(x => x.Name)
                 .HasMaxLength(ModelValidation.ChildCategory.NameMaxLength)
                 .IsRequired();
-
-
         }
     }
 }

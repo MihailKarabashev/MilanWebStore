@@ -32,7 +32,7 @@
 
                 if (shoppingCartProducts.Count() == 0 || shoppingCartProducts == null)
                 {
-                    return this.RedirectToAction(nameof(HomeController.Index));
+                    return this.RedirectToAction("Index", "Home");
                 }
 
                 return this.View(shoppingCartProducts);
@@ -42,7 +42,7 @@
 
             if (shoppingCartSession.Count() == 0 || shoppingCartSession == null)
             {
-                return this.RedirectToAction(nameof(HomeController.Index));
+                return this.RedirectToAction("Index", "Home");
             }
 
             return this.View(shoppingCartSession);

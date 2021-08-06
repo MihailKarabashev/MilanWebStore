@@ -80,9 +80,7 @@
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            this.ConfigureUserIdentityRelations(builder);
+            this.ConfigureDataBaseRelations(builder);
 
             EntityIndexesConfiguration.Configure(builder);
 
@@ -113,7 +111,7 @@
         }
 
         // Applies configurations
-        private void ConfigureUserIdentityRelations(ModelBuilder builder)
+        private void ConfigureDataBaseRelations(ModelBuilder builder)
              => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
         private void ApplyAuditInfoRules()

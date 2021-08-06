@@ -17,14 +17,12 @@
                 .HasOne(c => c.Product)
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.ProductId)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
             comment
               .HasOne(c => c.ApplicationUser)
               .WithMany(u => u.Comments)
               .HasForeignKey(c => c.ApplicationUserId)
-              .IsRequired()
               .OnDelete(DeleteBehavior.Restrict);
         }
     }

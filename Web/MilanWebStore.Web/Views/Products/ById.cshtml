@@ -71,18 +71,6 @@
                             </div>
 
                             <form asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@Model.Id" asp-route-quantity="@Model.Quantity" method="post">
-                                <div class="pd-color">
-                                    <h6>Color</h6>
-                                    @foreach (var color in Model.ProductVariants.Take(1))
-                                    {
-                                        <div class="pd-color-choose">
-                                            <div class="cc-item">
-                                                <input type="radio" id="cc-@color.ColorName.ToLower()">
-                                                <label for="cc-@color.ColorName.ToLower()" class="cc-@color.ColorName.ToLower()"></label>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
 
                                 <div class="pd-size-choose">
                                     @foreach (var productVariant in Model.ProductVariants)
