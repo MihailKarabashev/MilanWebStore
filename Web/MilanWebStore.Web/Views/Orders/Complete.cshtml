@@ -1,0 +1,73 @@
+﻿@model CompleteOrderViewModel
+@{
+    this.ViewData["Title"] = "Completed Order";
+}
+
+<link href="~/css/custom.css" rel="stylesheet" asp-append-version="true" />
+
+<div class=" container-fluid my-5 ">
+    <div class="row justify-content-center ">
+        <div class="col-xl-10">
+            <div class="card shadow-lg ">
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="card border-0">
+                            <div class="card-header pb-0">
+                                <h2 class="card-title space ">Details</h2>
+                                <p class="card-text text-muted mt-4 space">SHIPPING DETAILS</p>
+                                <hr class="my-0">
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group"> <label class="small text-muted mb-1">Full Name</label> <input type="text" class="form-control form-control-sm" aria-describedby="helpId" placeholder="@Model.FullName" disabled> </div>
+                                <div class="form-group"> <label class="small text-muted mb-1">Phone Number</label> <input type="number" class="form-control form-control-sm" aria-describedby="helpId" placeholder="@Model.PhoneNumber" disabled> </div>
+                                <div class="form-group"> <label class="small text-muted mb-1">City</label> <input type="number" class="form-control form-control-sm" aria-describedby="helpId" placeholder="@Model.AddressCity, @Model.AddressStreet" disabled> </div>
+                                <div class="form-group"> <label class="small text-muted mb-1">Address</label> <input type="number" class="form-control form-control-sm" aria-describedby="helpId" placeholder="@Model.AddressNotes @Model.AddressZipCode" disabled> </div>
+                                <div class="form-group"> <label class="small text-muted mb-1">Payment method</label> <input type="number" class="form-control form-control-sm" aria-describedby="helpId" placeholder="@Model.PaymentTypeName" disabled> </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="card border-0 ">
+                            <div class="card-header card-2">
+                                <p class="card-text text-muted mt-md-4 mb-2 space">YOUR PRODUCTS</p>
+                                <hr class="my-2">
+                            </div>
+                            <div class="card-body pt-0">
+                                <vc:order-products-component order-id="@Model.Id"></vc:order-products-component>
+                                <div class="row mb-5 mt-4 ">
+                                    @if (Model.PaymentTypeName == "Card")
+                                    {
+                                        <div class="col-md-7 col-lg-6 mx-auto">
+                                            <a type="button"
+                                               class="btn btn-danger btn-outline-danger btn-lg"
+                                               asp-controller="Payments"
+                                               asp-action="Pay"
+                                               asp-route-orderId="@Model.Id">
+                                                Pay Now
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-7 col-lg-6 mx-auto">
+                                            <a type="button" class="btn btn-danger btn-outline-danger btn-lg"
+                                               asp-action="SuccessfulPayment"
+                                               asp-controller="Payments"
+                                               asp-route-id="@Model.Id">
+                                                Complete Your Order
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

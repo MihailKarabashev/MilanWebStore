@@ -1,0 +1,68 @@
+﻿@model UserOrdersViewModel
+
+@{
+    this.ViewData["Title"] = "My Orders";
+    var count = 1;
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <a asp-controller="Home" asp-action="Index">Shop</a>
+                    <span>My Orders</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (this.Model.Orders.Count() > 0)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card spur-card">
+                <div class="card-body ">
+                    <table class="table table-hover table-in-card">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col">ShippingMethod</th>
+                                <th scope="col">Total Price</th>
+                                <th scope="col">Created On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.Orders)
+                            {
+                                <tr>
+                                    <td>@(count++)</td>
+                                    <td>@order.OrderStatus</td>
+                                    <td>@order.PaymentMethod</td>
+                                    <td>@order.ShippingMethod</td>
+                                    <td>$@order.TotalPrice</td>
+                                    <td>@order.CreatedOn.ToString("MM/dd/yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Ooops!</h1>
+        <p class="lead"> You have not placed any orders.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-danger btn-lg" asp-controller="Home" asp-action="Index" role="button">Home</a>
+            <a class="btn btn-danger btn-lg" asp-controller="Products" asp-action="All" asp-route-pageNumber="1" role="button">Shop Now</a>
+        </p>
+    </div>
+}
