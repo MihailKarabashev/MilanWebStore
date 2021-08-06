@@ -1,0 +1,94 @@
+﻿@model AllProductsQueryModel
+@{
+    this.ViewData["Title"] = "All Products";
+}
+
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="product-shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+
+                <form asp-controller="Products" asp-action="All" method="get">
+
+                    <div class="form-group">
+                        <label asp-for="@Model.FilterByPrice"></label>
+                        <select class="form-control" asp-for="@Model.FilterByPrice">
+                            <option value="0" selected>$0 - MAX</option>
+                            <option value="1">$7 - 50$</option>
+                            <option value="2">$50 - 100$</option>
+                            <option value="3">$100 - 200$</option>
+                            <option value="4">$200 - 1000$</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.ChildCategoryId"></label>
+                        <select class="form-control" asp-for="@Model.ChildCategoryId" asp-items="@Model.ChildCategories.Select(x=> new SelectListItem(x.Name , x.Id.ToString()))">
+                        </select>
+                        <span asp-validation-for="@Model.ChildCategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.ParentCategoryId"></label>
+                        <select class="form-control" asp-for="@Model.ParentCategoryId" asp-items="@Model.ParentCategories.Select(x=> new SelectListItem(x.Name , x.Id.ToString()))">
+                        </select>
+                        <span asp-validation-for="@Model.ParentCategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.SizeId"></label>
+                        <select class="form-control" asp-for="@Model.SizeId" asp-items="@Model.Sizes.Select(x=> new SelectListItem(x.Name , x.Id.ToString()))">
+                        </select>
+                        <span asp-validation-for="@Model.SizeId" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">Search</button>
+                </form>
+            </div>
+
+            <div class="col-lg-9 order-1 order-lg-2">
+                <div class="product-show-option">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-7">
+                            <div class="select-option">
+                                <select class="sorting">
+                                    <option value="">Default Sorting</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-list">
+                    <div class="row">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-lg-4 col-sm-6">
+                                <partial name="~/Views/Shared/Partials/_ProductPartial.cshtml" model="@product" />
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <br />
+
+                <nav aria-label="...">
+                    <partial name="~/Views/Shared/Partials/_PagingPartial.cshtml" model="@Model" />
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>

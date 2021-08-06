@@ -1,0 +1,271 @@
+﻿@model SingleProductViewModel
+@{
+    this.ViewData["Title"] = "Product Details";
+    var comments = this.Model.CommentsCount > 1 ? "Comments" : "Comment";
+    var reviews = this.Model.CommentsCount > 1 ? "Customer Reviews" : "Customer Review";
+}
+
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <a href="./shop.html">Shop</a>
+                    <span>Detail</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="product-shop spad page-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="product-pic-zoom">
+                            <img class="product-big-img" src="@Model.SingleImageUrl" alt="">
+                            <div class="zoom-icon">
+                                <i class="fa fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="product-thumbs">
+                            <div class="product-thumbs-track ps-slider owl-carousel">
+                                @foreach (var image in Model.ImageUrls)
+                                {
+                                    <div class="pt active" data-imgbigurl="@image">
+                                        <img src="@image" alt="ss">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-details">
+                            <div class="pd-title">
+                                <h3>@Model.Name</h3>
+                                <a asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id" asp-route-quantity="1" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                            </div>
+                            <div class="pd-rating">
+                                <i class="fas fa-star" data-vote="1"></i>
+                                <i class="fas fa-star" data-vote="2"></i>
+                                <i class="fas fa-star" data-vote="3"></i>
+                                <i class="fas fa-star" data-vote="4"></i>
+                                <i class="fas fa-star" data-vote="5"></i>
+                                <span id="averageVoteValue" class="font-weight-bold"> @Model.AverageValue.ToString("0.0")</span>  / <span class="font-weight-bold">5.0</span>
+                            </div>
+                            <div class="pd-desc">
+                                <p>@Model.Description</p>
+                                @if (Model.InDiscount)
+                                {
+                                    <h4>$@Model.DiscountPrice <span>@Model.Price</span></h4>
+                                }
+                                else
+                                {
+                                    <h4>$@Model.Price<span></span></h4>
+                                }
+                            </div>
+
+                            <form asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@Model.Id" asp-route-quantity="@Model.Quantity" method="post">
+                                <div class="pd-color">
+                                    <h6>Color</h6>
+                                    @foreach (var color in Model.ProductVariants.Take(1))
+                                    {
+                                        <div class="pd-color-choose">
+                                            <div class="cc-item">
+                                                <input type="radio" id="cc-@color.ColorName.ToLower()">
+                                                <label for="cc-@color.ColorName.ToLower()" class="cc-@color.ColorName.ToLower()"></label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="pd-size-choose">
+                                    @foreach (var productVariant in Model.ProductVariants)
+                                    {
+                                        @if (productVariant.IsSizeAvailable)
+                                        {
+                                            <div class="sc-item">
+
+                                                <input type="radio" id="sm-@productVariant.SizeId" name="SizeId" value="@productVariant.SizeId">
+                                                <label for="sm-@productVariant.SizeId">@productVariant.SizeName</label>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" value="1" name="quantity">
+                                    </div>
+                                    <button type="submit" class="primary-btn">Add To Cart</button>
+                                </div>
+                            </form>
+
+                            <ul class="pd-tags">
+                                <li><span>CATEGORIES</span>: @Model.ParentCategoryName  @Model.ChildCategoryName</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-tab">
+                    <div class="tab-item">
+                        <ul class="nav" role="tablist">
+                            <li>
+                                <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#tab-3" role="tab">@reviews (@Model.CommentsCount)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-item-content">
+                        <div class="tab-content">
+                            <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                                <div class="product-content">
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <h5>Introduction</h5>
+                                            <p>@Model.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                <div class="customer-review-option">
+                                    <h4>@Model.CommentsCount @comments</h4>
+                                    <div class="comment-option">
+                                        @foreach (var comment in Model.Comments)
+                                        {
+                                            <div class="co-item">
+                                                <div class="avatar-pic">
+                                                    <img src="@comment.UserImageUrl" alt=">@comment.FullName">
+                                                </div>
+                                                <div class="avatar-text">
+                                                    <h5>@comment.FullName <span>@comment.CreatedOn</span></h5>
+                                                    <div class="at-reply h2">@comment.Content</div>
+                                                    @if (this.User.IsInRole("Administrator"))
+                                                    {
+                                                        <a asp-area="Administration" asp-controller="Comments"
+                                                           asp-action="Delete"
+                                                           asp-route-id="@comment.Id"
+                                                           asp-route-categoryId="@Model.ParentCategoryId"
+                                                           asp-route-productId="@Model.Id"
+                                                           class="btn btn-group-sm btn-danger" type="submit">Delete</a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    @if (this.User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="leave-comment">
+                                            <h4>Leave a comment</h4>
+                                            <form asp-action="Create" asp-controller="Comments" asp-route-categoryId="@Model.ParentCategoryId" asp-route-productId="@Model.Id" class="comment-form">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <textarea asp-for="@Model.CommentContent" placeholder="Your comment"></textarea>
+                                                        <span asp-validation-for="@Model.CommentContent" class="text-danger"></span>
+                                                        <button type="submit" class="site-btn">Comment</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="related-products spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Related Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var realatedProduct in Model.RelatedProducts)
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <a asp-controller="Products" asp-action="ById" asp-route-id="@realatedProduct.Id" asp-route-categoryId="@realatedProduct.ChildCategoryId"><img src="@realatedProduct.ImageUrl" alt="@realatedProduct.Name"></a>
+                            @if (realatedProduct.InDiscount)
+                            {
+                                <div class="sale">Sale</div>
+                            }
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@realatedProduct.Id" asp-route-quantity="1"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a asp-controller="Products" asp-action="ById" asp-route-id="@realatedProduct.Id" asp-route-categoryId="@realatedProduct.ChildCategoryId">+ Quick View</a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <a href="#">
+                                <h5>@realatedProduct.Name</h5>
+                            </a>
+                            @if (!realatedProduct.InDiscount)
+                            {
+                                <div class="product-price">
+                                    $@realatedProduct.Price
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="product-price">
+                                    $@realatedProduct.DiscountPrice
+                                    <span>$@realatedProduct.Price</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<form method="post" id="antiForgeryForm"></form>
+@section Scripts{
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script>
+        $("i[data-vote]").each(function (el){
+            $(this).click(function () {
+                var value = $(this).attr("data-vote");
+                var parsedValue = parseInt(value);
+                var productId = @this.Model.Id;
+                var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+                var data = { productId: productId, value: parsedValue };
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Votes",
+                    data: JSON.stringify(data),
+                    headers: {
+                        'X-CSRF-TOKEN': antiForgeryToken
+                    },
+                    success: function (data) {
+                        $('#averageVoteValue').html(data.averageVote.toFixed(1));
+                    },
+                    contentType: 'application/json'
+                });
+            })
+        });
+    </script>
+}
