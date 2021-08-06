@@ -27,12 +27,12 @@
 </head>
 <body>
     <header class="header-section">
-        <partial name="_NavProfileMenu" />
+        <partial  name = "~/Views/Shared/Partials/_NavProfileMenu.cshtml" />
         <div class="container">
             <div class="inner-header">
                 <div class="row">
                     <div class="col-lg-8 col-md-8">
-                        <partial name="_SearchBarPartial" />
+                        <partial name="~/Views/Shared/Partials/_SearchBarPartial.cshtml" />
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
@@ -44,17 +44,17 @@
             </div>
         </div>
         <cache expires-after="TimeSpan.FromDays(2)">
-            <partial name="_NavCategoriesMenuPartial" />
+            <partial name="~/Views/Shared/Partials/_NavCategoriesMenuPartial.cshtml" />
         </cache>
     </header>
 
-    <partial name="_CookieConsentPartial" />
+    <partial name="~/Views/Shared/Partials/_CookieConsentPartial.cshtml" />
     <main role="main" class="pb-3">
         @this.RenderBody()
     </main>
 
     <footer class="footer-section">
-        <partial name="_FooterPartialMenu" />
+        <partial name="~/Views/Shared/Partials/_FooterPartialMenu.cshtml" />
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>

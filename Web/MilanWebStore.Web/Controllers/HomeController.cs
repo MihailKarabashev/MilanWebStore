@@ -33,7 +33,7 @@
                 ProductsInSale = this.productsService.GetAllInSale<ProductInAllViewModel>(),
                 Categories = this.childCategoriesService.GetAllKits<ChildCategoryViewModel>(),
                 TopProducts = this.productsService.GetTopProducts<ProductInAllViewModel>(),
-                ProductOfTheWeek = this.productsService.DealOfTheWeek(),
+                //ProductOfTheWeek = this.productsService.DealOfTheWeek(),
                 LatestNews = this.newsService.GetTop3LatestNews<SingleNewsViewModel>(),
             };
 

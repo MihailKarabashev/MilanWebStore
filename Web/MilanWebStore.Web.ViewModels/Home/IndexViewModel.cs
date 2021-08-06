@@ -14,7 +14,7 @@
 
         public IEnumerable<ProductInAllViewModel> TopProducts { get; set; }
 
-        public ProductOfTheWeekViewModel ProductOfTheWeek { get; set; }
+        //public ProductOfTheWeekViewModel ProductOfTheWeek { get; set; }
 
         public IEnumerable<SingleNewsViewModel> LatestNews { get; set; }
     }

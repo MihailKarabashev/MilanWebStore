@@ -50,14 +50,14 @@
                 <div class="product-slider owl-carousel">
                     @foreach (var product in Model.ProductsInSale)
                     {
-                        <partial name="_ProductPartial" model="@product" />}
+                        <partial name="~/Views/Shared/Partials/_ProductPartial.cshtml" model="@product" />}
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="deal-of-week set-bg spad" data-setbg="@Model.ProductOfTheWeek.ImageUrl">
+@*<section class="deal-of-week set-bg spad" data-setbg="@Model.ProductOfTheWeek.ImageUrl">
     <div class="container">
         <div class="col-lg-6 text-center">
             <div class="section-title">
@@ -94,7 +94,7 @@
             <a asp-controller="Products" asp-action="ById" asp-route-id="@Model.ProductOfTheWeek.Id" asp-route-categoryId="@Model.ProductOfTheWeek.ParentCategoryId" class="primary-btn">Shop Now</a>
         </div>
     </div>
-</section>
+</section>*@
 
 <br />
 <br />
@@ -107,7 +107,7 @@
 
                     @foreach (var product in Model.TopProducts)
                     {
-                        <partial name="_ProductPartial" model="@product" />}
+                        <partial name="~/Views/Shared/Partials/_ProductPartial.cshtml" model="@product" />}
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
