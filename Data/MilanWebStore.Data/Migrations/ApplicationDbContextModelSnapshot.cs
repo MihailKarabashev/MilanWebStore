@@ -618,21 +618,6 @@ namespace MilanWebStore.Data.Migrations
                     b.Property<int>("ChildCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ParentCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ParentCateogryId")
                         .HasColumnType("int");
 
@@ -640,9 +625,7 @@ namespace MilanWebStore.Data.Migrations
 
                     b.HasIndex("ChildCategoryId");
 
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ParentCategoryId");
+                    b.HasIndex("ParentCateogryId");
 
                     b.ToTable("ParentChildCategories");
                 });
@@ -1081,7 +1064,9 @@ namespace MilanWebStore.Data.Migrations
 
                     b.HasOne("MilanWebStore.Data.Models.ParentCategory", "ParentCategory")
                         .WithMany("ParentChildCategory")
-                        .HasForeignKey("ParentCategoryId");
+                        .HasForeignKey("ParentCateogryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ChildCategory");
 
