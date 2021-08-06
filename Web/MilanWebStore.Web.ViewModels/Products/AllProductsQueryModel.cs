@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using MilanWebStore.Web.ViewModels.Administration.ParentCategory;
     using MilanWebStore.Web.ViewModels.ChildCategories;
+    using MilanWebStore.Web.ViewModels.ParentCategories;
     using MilanWebStore.Web.ViewModels.Sizes;
 
     public class AllProductsQueryModel
