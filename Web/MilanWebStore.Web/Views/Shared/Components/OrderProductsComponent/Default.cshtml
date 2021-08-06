@@ -1,0 +1,58 @@
+﻿@model AllOrderProductsViewModel
+
+@foreach (var product in Model.Products)
+{
+    <div class="row justify-content-between">
+        <div class="col-auto col-md-7">
+            <div class="media flex-column flex-sm-row">
+                <a asp-area="" asp-controller="Products" asp-action="ById" asp-route-id="@product.ProductId">
+                    <img class=" img-fluid" src="@product.ImageUrl" width="62" height="62">
+                </a>
+                <div class="media-body my-auto">
+                    <div class="row ">
+                        <div class="col-auto">
+                            <p class="mb-0"><b>@product.ProductName</b></p>@*<small class="text-muted">@product.SizeName</small>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" pl-0 flex-sm-col col-auto my-auto">
+            <p class="boxed-1">@product.Quantity</p>
+        </div>
+        <div class=" pl-0 flex-sm-col col-auto my-auto ">
+            <p><b>@product.Price $</b></p>
+        </div>
+    </div>
+    <hr class="my-2">
+}
+
+<div class="row ">
+    <div class="col">
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <p class="mb-1"><b>Subtotal</b></p>
+            </div>
+            <div class="flex-sm-col col-auto">
+                <p class="mb-1"><b>@(Model.Products.Sum(x => x.Price * x.Quantity)) $</b></p>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col">
+                <p class="mb-1"><b>Shipping</b></p>
+            </div>
+            <div class="flex-sm-col col-auto">
+                <p class="mb-1"><b>0 $</b></p>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <p><b>Total</b></p>
+            </div>
+            <div class="flex-sm-col col-auto">
+                <p class="mb-1"><b>@(Model.Products.Sum(x => x.Price * x.Quantity)) $</b></p>
+            </div>
+        </div>
+        <hr class="my-0">
+    </div>
+</div>

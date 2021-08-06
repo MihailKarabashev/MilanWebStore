@@ -1,0 +1,45 @@
+﻿@model AllFavoriteProductsViewModel
+
+
+<li class="cart-icon">
+    <a href="#">
+        <i class="icon_heart_alt"></i>
+        <span class="bg-danger">@Model.Favorites.Count()</span>
+    </a>
+    @if (Model.Favorites.Count() != 0)
+    {
+        <div class="cart-hover">
+            <div class="select-items">
+                <table>
+                    <tbody>
+                        @foreach (var favorite in Model.Favorites)
+                        {
+                            <tr>
+                                <td class="si-pic">
+                                    <a asp-controller="Products" asp-action="ById" asp-route-id="@favorite.ProductId"
+                                       asp-route-categoryId="@favorite.ParentCategoryId">
+                                        <img src="@favorite.ProductImageUrl" alt="@favorite.ProductName">
+                                    </a>
+                                </td>
+                                <td class="si-text">
+                                    <div class="product-selected">
+                                        <p>$@favorite.Price</p>
+                                        <h6>@favorite.ProductName</h6>
+                                    </div>
+                                </td>
+                                <td class="si-close">
+                                    <a asp-controller="Favorites" asp-action="Delete" asp-route-id="@favorite.Id"><i class="ti-close"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="select-button">
+                <a asp-controller="Favorites" asp-action="Index" class="primary-btn view-card">VIEW PRODUCTS</a>
+            </div>
+        </div>
+    }
+</li>
+
