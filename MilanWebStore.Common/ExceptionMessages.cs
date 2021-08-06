@@ -33,5 +33,7 @@
         public const string InvalidImageExtension = "Invalid image extension {0}";
 
         public const string TempDataOrderMessageForEmptyBasket = "To continue add products in basket";
+
+        public const string UnsuccessfullPayment = "Your order was unsuccessfully paid";
     }
 }
