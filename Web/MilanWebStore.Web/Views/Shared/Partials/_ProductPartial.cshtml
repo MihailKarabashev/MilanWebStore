@@ -1,0 +1,37 @@
+﻿@model ProductViewModel
+
+<div class="product-item">
+    <div class="pi-pic">
+        <a asp-controller="Products" asp-action="ById" asp-route-id="@Model.Id" asp-route-categoryId="@Model.ChildCategoryId"><img src=@Model.ImageUrl alt="@Model.Name"></a>
+        @if (Model.InDiscount)
+        {
+            <div class="sale">Sale</div>
+        }
+        <div class="icon">
+            <a asp-controller="Favorites" asp-action="Add" asp-route-id="@Model.Id"> <i class="icon_heart_alt"></i> </a>
+        </div>
+        <ul>
+            <li class="w-icon active"><a asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@Model.Id"><i class="icon_bag_alt"></i></a></li>
+            <li class="quick-view"><a asp-controller="Products" asp-action="ById" asp-route-id="@Model.Id" asp-route-categoryId="@Model.ChildCategoryId">+ Quick View</a></li>
+        </ul>
+    </div>
+    <div class="pi-text">
+        <div class="catagory-name"></div>
+        <a href="#">
+            <h5>@Model.Name</h5>
+        </a>
+        @if (Model.InDiscount)
+        {
+            <div class="product-price">
+                $@Model.DiscountPrice
+                <span>$@Model.Price</span>
+            </div>
+        }
+        else
+        {
+            <div class="product-price">
+                $@Model.Price
+            </div>
+        }
+    </div>
+</div>

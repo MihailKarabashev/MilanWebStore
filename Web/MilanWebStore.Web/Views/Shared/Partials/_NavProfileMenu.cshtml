@@ -1,0 +1,47 @@
+﻿<div class="header-top">
+    <div class="container">
+        <div class="ht-left">
+            <div class="mail-service">
+                <a asp-controller="Home" asp-action="Contacts"><i class="fa fa-envelope"></i></a>
+                Contact us
+            </div>
+
+            <div class="phone-service">
+                <a href="#"><img class="img-fluid" width="50" height="50" src="https://assets-eu-01.kc-usercontent.com:443/1293c890-579f-01b7-8480-902cca7de55e/28aa448e-19f1-4c27-8ec2-2af25c679693/Puma_Resize_2.png" /></a>
+                <a href="#"><img class="img-fluid" width="50" height="50" src="https://assets-eu-01.kc-usercontent.com:443/1293c890-579f-01b7-8480-902cca7de55e/a54a6f36-c71a-498e-8879-80f5005a87a7/Emirates_Resize_2.png" /></a>
+            </div>
+        </div>
+        <div class="ht-right">
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <a href="#" class="login-panel" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user"></i>Hello  @this.User.Identity.Name
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    @if (this.User.IsInRole("Administrator"))
+                    {
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="dropdown-item"> Admin Dashboard</a>
+                    }
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item">Profile</a>
+                    <a asp-area="" asp-controller="Orders" asp-action="MyOrders" class="dropdown-item"> My Orders</a>
+                    <a asp-area="" asp-controller="Favorites" asp-action="Index" class="dropdown-item">Favorite products</a>
+                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Chat" class="dropdown-item"><i class="fas fa-comment-alt"> Chat </i></a>
+                    <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item"> Logout</a>
+                </div>
+            }
+            else
+            {
+                <a asp-area="Identity" asp-page="/Account/Register" class="login-panel">Register</a>
+                <a asp-area="Identity" asp-page="/Account/Login" class="login-panel">Login</a>
+            }
+            <div class="top-social">
+                <a href="#"><i class="ti-facebook"></i></a>
+                <a href="#"><i class="ti-twitter-alt"></i></a>
+                <a href="#"><i class="ti-linkedin"></i></a>
+                <a href="#"><i class="ti-pinterest"></i></a>
+                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Chat"><i class="fas fa-comment-alt">  </i></a>
+            </div>
+        </div>
+    </div>
+</div>

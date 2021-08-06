@@ -1,0 +1,71 @@
+﻿@using MilanWebStore.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject MilanWebStore.Services.Data.Contracts.INavBarService Navbar
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+
+    var navbarModel = this.Navbar.GetAllParentChildCategories<ParentNavViewModel>();
+}
+
+
+<div class="nav-item">
+    <div class="container">
+        <div class="nav-depart">
+            <div class="depart-btn">
+                <i class="ti-menu"></i>
+                <span>All departments</span>
+                <ul class="depart-hover">
+
+                    @foreach (var parentCategory in navbarModel)
+                    {
+                        <li><a asp-controller="Products" asp-action="All" asp-route-pageNumber="1" asp-route-parentCategoryId="@parentCategory.Id">@parentCategory.Name’s Clothing</a></li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <nav class="nav-menu mobile-menu">
+            <ul>
+                <li class="bg-danger"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li>
+                    <a class="bg-danger" href="#">Pages</a>
+                    <ul class="dropdown">
+                        <li><a asp-area="" asp-controller="News" asp-action="All">News</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Faq">Faq</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contacts">Contact us</a></li>
+                        @if (!this.SignInManager.IsSignedIn(this.User))
+                        {
+                            <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                            <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                @foreach (var parentCategory in navbarModel)
+                {
+                    <li class="bg-danger">
+                        <a asp-controller="Products" asp-action="All" asp-route-pageNumber="1" asp-route-parentCategoryId="@parentCategory.Id">@parentCategory.Name</a>
+
+                        <ul class="dropdown">
+                            @foreach (var childCategory in parentCategory.ParentChildCategory)
+                            {
+                                <li>
+                                    <a asp-controller="Products" asp-action="All"
+                                       asp-route-parentCategoryId="@childCategory.ParentCategoryId"
+                                       asp-route-childCategoryId="@childCategory.ChildCategoryId"
+                                       asp-route-pageNumber="1">@childCategory.ChildCategoryName</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+    </div>
+</div>
