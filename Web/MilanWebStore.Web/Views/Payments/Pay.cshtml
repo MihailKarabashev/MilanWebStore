@@ -1,0 +1,48 @@
+﻿@model PayInputModel
+@{
+    this.ViewData["Title"] = "Pay";
+}
+<div class="container">
+    <form asp-controller="Payments" asp-action="Pay" method="post">
+        <h1>Credit Card Payment Gateway</h1>
+        <div>
+            <div><img class="img-fluid" src="https://www.mhe-sme.org/wp-content/uploads/2017/11/stripe-secure.png" /></div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label asp-for="CardNumder" class="control-label"></label>
+                    <input asp-for="CardNumder" class="form-control" />
+                    <span asp-validation-for="CardNumder" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Month" class="control-label"></label>
+                        <input asp-for="Month" class="form-control" placeholder="MM" />
+                        <span asp-validation-for="Month" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Year" class="control-label"></label>
+                        <input asp-for="Year" class="form-control" placeholder="YYYY" />
+                        <span asp-validation-for="Year" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CVC" class="control-label"></label>
+                    <input asp-for="CVC" class="form-control" />
+                    <span asp-validation-for="CVC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Total Price</label>
+                    <input asp-for="Amount" class="form-control" type="number" value="@Model.Amount.ToString("F2")" readonly />
+                    <span asp-validation-for="Amount"></span>
+                </div>
+                <input asp-for="@Model.OrderId" type="hidden" />
+                <div class="form-group text-right">
+                    <input type="submit" value="Stripe Checkout" class="btn btn-danger" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

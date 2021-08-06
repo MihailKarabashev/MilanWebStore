@@ -1,0 +1,19 @@
+﻿@{
+    this.ViewData["Title"] = "Successfull Payment";
+}
+
+<div class="container mt-3 mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <p>
+        <div class="container-fluid">
+            <i class="fas fa-check fa-10x text-success"></i>
+            <div class="text-black-50 font-weight-bold">Your order was successfull! </div>
+            <div class="text-black-50 font-weight-bold">Check your email for further info.</div>
+        </div>
+    </p>
+    <br />
+    <div>
+        <a class="btn btn-danger btn-lg" asp-controller="Home" asp-action="Index" role="button">Home</a>
+        <a class="btn btn-secondary btn-lg" asp-controller="Home" asp-action="Contacts" role="button">Contact</a>
+    </div>
+</div>

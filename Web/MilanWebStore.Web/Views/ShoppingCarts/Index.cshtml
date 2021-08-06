@@ -1,0 +1,100 @@
+﻿@model IList<ShoppingCartProductsViewModel>
+@{
+    this.ViewData["Title"] = "Shopping cart products";
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <a asp-controller="Home" asp-action="Index">Shop</a>
+                    <span>Shopping Cart</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th class="p-name">Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th><i class="ti-close"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+                                    <td class="cart-pic">
+                                        <a asp-controller="Products" asp-action="ById" asp-route-id="@product.Id"
+                                           asp-route-categoryId="@product.ProductParentCategoryId">
+                                            <img src="@product.ProductImageUrl" alt="@product.ProductName">
+                                        </a>
+                                    </td>
+                                    <td class="cart-title">
+                                        <h5>@product.ProductName</h5>
+                                    </td>
+                                    <td class="p-price">$@product.Price</td>
+                                    <td class="qua-col">
+                                        <div class="input-group mb-3" style="max-width: 120px;">
+                                            <div class="input-group-prepend">
+                                                <a class="btn btn-outline-danger" asp-controller="ShoppingCarts" asp-action="Edit" asp-route-shoppingCartId="@product.Id" asp-route-quantity="@(product.Quantity-1)"><i class="fas fa-minus"></i></a>
+                                            </div>
+                                            <input type="text" class="form-control text-center" name="quantity" value="@product.Quantity" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                            <div class="input-group-append">
+                                                <a class="btn btn-outline-danger" asp-controller="ShoppingCarts" asp-action="Edit" asp-route-shoppingCartId="@product.Id" asp-route-quantity="@(product.Quantity+1)"><i class="fas fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="total-price">$@(product.Quantity * product.Price)</td>
+                                    <td class="close-td">
+                                        <a class="btn btn-danger" asp-controller="ShoppingCarts" asp-action="Delete" asp-route-shoppingCartId="@product.Id">
+                                            <i class="ti-close"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="cart-buttons">
+                            <a asp-controller="Home" asp-action="Index" class="primary-btn continue-shop btn-group-toggle bg-dark  text-white">Continue shopping</a>
+                        </div>
+                        <div class="discount-coupon">
+                            <h6>Discount Codes</h6>
+                            <form action="#" class="coupon-form">
+                                <input type="text" placeholder="Enter your codes">
+                                <button type="submit" class="site-btn coupon-btn">Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 offset-lg-4">
+                        <div class="proceed-checkout">
+                            <ul>
+                                <li class="subtotal">Subtotal <span>$@Model.Sum(x => x.TotalPrice)</span></li>
+                                <li class="cart-total">Total <span>$@Model.Sum(x => x.TotalPrice)</span></li>
+                            </ul>
+                            <a asp-controller="Orders" asp-action="Create" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
