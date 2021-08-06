@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "ERROR 404";
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a><i class="fa fa-ban"></i> <span>Error (Page Not Found)</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <h1 class="display-4 font-weight-bold">@this.ViewData["Title"] <i class="fas fa-exclamation-triangle text-danger"></i></h1>
+                <p class="lead">Ooops someting went wrong!!!</p>
+                <hr class="my-4">
+                <p>Sorry we can’t find what you are looking for, here’s some suggested pages for you :</p>
+                <p class="lead">
+                    <a class="btn btn-danger btn-lg" asp-controller="Home" asp-action="Index" role="button">Home</a>
+                    <a class="btn btn-danger btn-lg" asp-controller="Products" asp-action="All" asp-route-id="1" role="button">Shop</a>
+                    <a class="btn btn-danger btn-lg" asp-controller="News" asp-action="All" asp-route-id="1" role="button">Latest News</a>
+                    <a class="btn btn-danger btn-lg" asp-controller="Home" asp-action="Contacts" role="button">Contact us</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,9 +1,232 @@
-﻿@using MilanWebStore.Common
+﻿@model IndexViewModel
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        <div class="single-hero-items set-bg" data-setbg="img/zlatanCover.jpg">
+        </div>
+        <div class="single-hero-items set-bg" data-setbg="img/jerseyPuma.jpg">
+        </div>
+    </div>
+</section>
+
+<div class="banner-section spad">
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-lg-4">
+                    <div class="single-banner">
+                        <img src="~/img/@category.Name.Replace("Kit",String.Empty).TrimEnd()Jersey.jpg" alt="">
+                        <div class="inner-text">
+                            <a href="#"><h4>@category.Name.Replace("Kit", String.Empty).ToUpper() MATCH JERSEY</h4></a>
+                        </div>
+                    </div>
+                </div>}
+        </div>
+    </div>
 </div>
+
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        <a href="#">
+            <div class="single-hero-items set-bg" data-setbg="https://www.prodirectsoccer.com/-/media/prodirect/project/en/soccer/billboards/standard/pd-campaign/bb-sale-d-180621.jpg?impolicy=thumb&imwidth=1440">
+            </div>
+        </a>
+    </div>
+</section>
+
+
+<section class="women-banner spad">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-1">
+                <div class="filter-control">
+                    @*add filter for products*@
+                </div>
+                <div class="product-slider owl-carousel">
+                    @foreach (var product in Model.ProductsInSale)
+                    {
+                        <partial name="_ProductPartial" model="@product" />}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="deal-of-week set-bg spad" data-setbg="@Model.ProductOfTheWeek.ImageUrl">
+    <div class="container">
+        <div class="col-lg-6 text-center">
+            <div class="section-title">
+                <h2>Deal Of The Week</h2>
+                <p>
+                    @Model.ProductOfTheWeek.Description
+                </p>
+                <div class="product-price">
+                    $@Model.ProductOfTheWeek.DiscountPrice
+                    <span>/ @Model.ProductOfTheWeek.Price</span>
+                </div>
+                <div class="product-price">
+                    @Model.ProductOfTheWeek.Percentage.ToString("F2")% DISCOUNT
+                </div>
+            </div>
+            <div class="countdown-timer" id="countdown">
+                <div class="cd-item">
+                    <span>56</span>
+                    <p>Days</p>
+                </div>
+                <div class="cd-item">
+                    <span>12</span>
+                    <p>Hrs</p>
+                </div>
+                <div class="cd-item">
+                    <span>40</span>
+                    <p>Mins</p>
+                </div>
+                <div class="cd-item">
+                    <span>52</span>
+                    <p>Secs</p>
+                </div>
+            </div>
+            <a asp-controller="Products" asp-action="ById" asp-route-id="@Model.ProductOfTheWeek.Id" asp-route-categoryId="@Model.ProductOfTheWeek.ParentCategoryId" class="primary-btn">Shop Now</a>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+<section class="man-banner spad">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="product-slider owl-carousel">
+
+                    @foreach (var product in Model.TopProducts)
+                    {
+                        <partial name="_ProductPartial" model="@product" />}
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1">
+                <div class="product-large set-bg m-large" data-setbg="/img/newArrivals.jpg">
+                    <h2 class="text-black-50">New Arrivals</h2>
+                    <a class="text-black-50" asp-controller="Products" asp-action="All" asp-route-pageNumber="1">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="instagram-photo">
+    <div class="insta-item set-bg" data-setbg="img/milanInsta1.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/milanInsta2.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/milanInsta3.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/milanInsta4.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/milanInsta5.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/milanInsta6.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="https://www.instagram.com/acmilan/">AC MILAN COLLECTION</a></h5>
+        </div>
+    </div>
+</div>
+
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Latest News</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var news in Model.LatestNews)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-latest-blog">
+                        <a asp-controller="News" asp-action="ById" asp-route-id="@news.Id"><img src="@news.ImageUrl" alt=""></a>
+                        <div class="latest-text">
+                            <div class="tag-list">
+                                <div class="tag-item">
+                                    <i class="fa fa-calendar-o"></i>
+                                    @news.CreatedOn.ToString("MMMM dd, yyyy")
+                                </div>
+                            </div>
+                            <a asp-controller="News" asp-action="ById" asp-route-id="@news.Id">
+                                <h4>@news.ShortTitle</h4>
+                            </a>
+                            <p>@news.ShortDescription </p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="benefit-items">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-1.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Free Shipping</h6>
+                            <p>For all orders</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-2.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Delivery On Time</h6>
+                            <p>If good have prolems</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single-benefit">
+                        <div class="sb-icon">
+                            <img src="img/icon-1.png" alt="">
+                        </div>
+                        <div class="sb-text">
+                            <h6>Secure Payment</h6>
+                            <p>100% secure payment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
