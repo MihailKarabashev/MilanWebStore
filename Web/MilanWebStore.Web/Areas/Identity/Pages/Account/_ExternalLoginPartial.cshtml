@@ -1,0 +1,25 @@
+﻿@if ((Model.ExternalLogins?.Count ?? 0) > 0)
+{
+    <div class="row">
+        <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div class="d-flex justify-content-around mb-2">
+
+                @foreach (var provider in Model.ExternalLogins)
+                {
+                    <div>
+                        @if (provider.Name == "Facebook")
+                        {
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-outline-primary btn-lg" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-facebook-square"></i> Login with @provider.DisplayName</button>
+                            </div>
+                        }
+                        else if (provider.Name == "Google")
+                        {
+                            <button type="submit" class="btn btn-outline-warning btn-lg" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-google-plus-g"></i> Login with  @provider.DisplayName</button>
+                        }
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+}
