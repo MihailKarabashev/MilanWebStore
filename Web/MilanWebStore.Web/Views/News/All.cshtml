@@ -1,0 +1,48 @@
+﻿@model AllNewsViewModel
+@{ this.ViewData["Title"] = "All News"; }
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <span>All News</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="blog-section spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 order-1 order-lg-2">
+                <div class="row">
+
+                    @foreach (var news in Model.AllNews)
+                    {
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="blog-item">
+                                <div class="bi-pic">
+                                    <a asp-area="" asp-controller="News" asp-action="ById" asp-route-id="@news.Id"><img src="@news.ImageUrl" alt="@news.Title"></a>
+                                </div>
+                                <div class="bi-text">
+                                    <a asp-area="" asp-controller="News" asp-action="ById" asp-route-id="@news.Id">
+                                        <h4>@news.Title</h4>
+                                    </a>
+                                    <p>AC MIALN <span>@news.CreatedOn.ToString("MMMM dd, yyyy")</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@Html.Partial("~/Areas/Administration/Views/Shared/_PagingAdministrationPartial.cshtml", Model);

@@ -1,0 +1,68 @@
+﻿@model SingleNewsViewModel
+@{
+    this.ViewData["Title"] = "Details";
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    <a asp-controller="News" asp-action="All">All News</a>
+                    <span>News</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog-details-inner">
+                    <div class="blog-detail-title">
+                        <h2>@Model.Title</h2>
+                        <p>AC MILAN <span>@Model.CreatedOn</span></p>
+                    </div>
+                    <div class="blog-large-pic">
+                        <img src="@Model.ImageUrl" alt="@Model.Title">
+                    </div>
+                    <br />
+                    <div class="blog-quote">
+                        <p>
+                            @Model.ShortTitle
+                        </p>
+                    </div>
+                    <div class="blog-detail-desc">
+                        <p>
+                            @Model.Description
+                        </p>
+                    </div>
+
+                    <div class="tag-share">
+                        <div class="details-tag">
+                            <ul>
+                                <li><i class="fa fa-tags"></i></li>
+                                <li>AC MILAN</li>
+                                <li>ITALY</li>
+                                <li>SERIE A</li>
+                            </ul>
+                        </div>
+                        <div class="blog-share">
+                            <span>Share:</span>
+                            <div class="social-links">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
