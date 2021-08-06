@@ -31,5 +31,7 @@
         public const string SizeIdNotFoud = "Size with Id {0} is not found.";
 
         public const string InvalidImageExtension = "Invalid image extension {0}";
+
+        public const string TempDataOrderMessageForEmptyBasket = "To continue add products in basket";
     }
 }
