@@ -242,7 +242,6 @@
                 ProductsCount = productsQuery.Count(),
             };
 
-            var ss = productsQuery.To<T>().ToList();
 
             return productsQuery.OrderByDescending(x => x.DiscountPrice).ThenBy(p => p.Price)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)

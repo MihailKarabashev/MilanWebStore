@@ -40,7 +40,6 @@ namespace MilanWebStore.Data.Models
 
         public int ShoppingCartId { get; set; }
 
-        [ForeignKey(nameof(ShoppingCartId))]
         public virtual ShoppingCart ShoppingCart { get; set; }
 
         public int AddressId { get; set; }

@@ -166,7 +166,7 @@
                 Price = x.Product.DiscountPrice == null ? x.Product.Price : (decimal)x.Product.DiscountPrice,
                 Quantity = x.Quantity,
                 ProductId = x.ProductId,
-                ShoppingCartApplicationUserId = x.ShoppingCart.ApplicationUserId,
+                ShoppingCartApplicationUserId = x.ShoppingCart.ApplicationUser.Id,
             }).ToList();
 
             return shoppingCartProductsViewModel;
