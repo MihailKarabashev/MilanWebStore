@@ -5,8 +5,6 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using Microsoft.EntityFrameworkCore;
     using MilanWebStore.Common;
     using MilanWebStore.Data.Common.Repositories;
     using MilanWebStore.Data.Models;
@@ -29,15 +27,20 @@
 
         public T GetById<T>(int id)
         {
-            var ss = this.productsRepository.All().Where(x => x.Id == id).Include(x => x.Comments)
-                .Include(x => x.Images)
-                .Include(x => x.Votes).FirstOrDefault();
-            return this.productsRepository.All().Where(x => x.Id == id).Include(x => x.Comments)
-                .Include(x=> x.Images)
-                .Include(x=> x.ParentCategory)
-                .Include(x=> x.ChildCategory)
-                .Include(x=> x.ProductVariants)
-                .Include(x => x.Votes).To<T>().FirstOrDefault();
+            //var ss = this.productsRepository.All().Where(x => x.Id == id)
+            //    .Select(x => new TestProduct
+            //    {
+            //        Name = x.Name,
+            //        ChildCategoryId = x.ChildCategoryId,
+            //        ParentCategoryId = x.ParentCategoryId,
+            //        Price = x.Price,
+            //        Id = x.Id,
+            //        DiscountPrice = x.DiscountPrice,
+            //    })
+            //    .FirstOrDefault();
+
+            return this.productsRepository.All().Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
         }
 
         public IEnumerable<T> GetAllInSale<T>()

@@ -70,7 +70,7 @@
                                 }
                             </div>
 
-                            <form asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@Model.Id" asp-route-quantity="@Model.Quantity" method="post">
+                            <form asp-controller="ShoppingCarts" asp-action="Add" asp-route-id="@Model.Id" method="post">
 
                                 <div class="pd-size-choose">
                                     @foreach (var productVariant in Model.ProductVariants)
@@ -257,3 +257,5 @@
         });
     </script>
 }
+
+@*<h1>WORKS</h1>*@

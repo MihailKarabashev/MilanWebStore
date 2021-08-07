@@ -33,7 +33,7 @@
 
         public double AverageValue { get; set; }
 
-        public int Quantity { get; set; }
+        //public int Quantity { get; set; }
 
         public int CommentsCount { get; set; }
 
@@ -59,7 +59,7 @@
                ? x.Images.FirstOrDefault().RemoteUrl
                : "/images/products/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extention))
 
-            .ForMember(x => x.Quantity, y => y.MapFrom(x => x.ShoppingCartProducts.FirstOrDefault().Quantity))
+            //.ForMember(x => x.Quantity, y => y.MapFrom(x => x.ShoppingCartProducts.FirstOrDefault().Quantity))
 
             .ForMember(x => x.AverageValue, y => y.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(x => x.Value)))
 

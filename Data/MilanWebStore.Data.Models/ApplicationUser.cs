@@ -7,6 +7,7 @@ namespace MilanWebStore.Data.Models
     using MilanWebStore.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -39,10 +40,12 @@ namespace MilanWebStore.Data.Models
 
         public int ShoppingCartId { get; set; }
 
+        [ForeignKey(nameof(ShoppingCartId))]
         public virtual ShoppingCart ShoppingCart { get; set; }
 
         public int AddressId { get; set; }
 
+        [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }

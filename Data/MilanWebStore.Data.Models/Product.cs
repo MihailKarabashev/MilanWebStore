@@ -2,6 +2,7 @@
 {
     using MilanWebStore.Data.Common.Models;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Product : BaseDeletableModel<int>
     {
@@ -30,9 +31,13 @@
 
         public int ChildCategoryId { get; set; }
 
+        [ForeignKey(nameof(ChildCategoryId))]
+
         public ChildCategory ChildCategory { get; set; }
 
         public int ParentCategoryId { get; set; }
+
+        [ForeignKey(nameof(ParentCategoryId))]
 
         public ParentCategory ParentCategory { get; set; }
 

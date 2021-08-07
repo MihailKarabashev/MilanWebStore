@@ -10,7 +10,7 @@ using MilanWebStore.Data;
 namespace MilanWebStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210806145514_InitialCreate")]
+    [Migration("20210806150837_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

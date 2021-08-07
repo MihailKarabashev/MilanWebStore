@@ -20,6 +20,7 @@
         [ForeignKey(nameof(ProductId))]
         public virtual Product Product { get; set; }
 
+        [ForeignKey(nameof(ApplicationUserId))]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public string ApplicationUserId { get; set; }
