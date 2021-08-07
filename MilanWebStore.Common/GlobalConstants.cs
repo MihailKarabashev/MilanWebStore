@@ -26,5 +26,9 @@
         public const string ShoppingCartKey = "shoppingCartKey";
 
         public const int ItemsPerPage = 4;
+
+        public const string ChildCategorySocksName = "Socks";
+
+        public const string SocksImageId = "211io998socks0022kk";
     }
 }

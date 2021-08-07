@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+    using MilanWebStore.Common;
     using MilanWebStore.Data.Models;
 
     public class ProductsSeeder : ISeeder
@@ -179,10 +181,7 @@
                 new Product
                 {
                     Name = "Ac Milan Home Socks 2021/22",
-                    Description = "65% polyester, 18% polyamide, 15% cotton, 2% elastane. ADVICE FOR CHOOSING THE SIZES: " +
-                    "Extra Small (XS) Europe 31 - 34; UK 12,5K - 2; US 13C - 3,5. Small (S) Europe 35 - 38; UK 2,5 - 5;" +
-                    " US 3 - 7. Medium (M) Europe 39 - 42; UK 6 - 8; US 6,5 - 8,5. Large (L) Europe 43 - 46; UK 8,5 - 11;" +
-                    " US 9,5 - 12; Extra Large (XL) Europe 47 - 49; UK 11,5 - 13,5; US 12,5 - 14,5.",
+                    Description = "65% polyester, 18% polyamide, 15% cotton, 2% elastane.",
                     Price = 52.99M,
                     DiscountPrice = 12.99M,
                     InDiscount = true,
@@ -200,7 +199,7 @@
                     },
                     Images = new List<Image>
                     {
-                       new Image { RemoteUrl = "https://dn1mx6r42x958.cloudfront.net/media/catalog/product/cache/cdcea7d0d52caa0116d01b95405365ac/M/I/MI21A31.jpg"},
+                       new Image { Id = "211io998socks0022kk", Extention = "png"},
                     },
                 }
 #pragma warning restore SA1413 // Use trailing comma in multi-line initializers

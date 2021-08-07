@@ -34,7 +34,7 @@
         public IEnumerable<T> GetAllInSale<T>()
         {
             return this.productsRepository.All()
-                 .Where(x => x.Availiability && x.InDiscount)
+                 .Where(x => x.Availiability && x.InDiscount && x.ChildCategory.Name != GlobalConstants.ChildCategorySocksName)
                  .Take(4)
                  .OrderByDescending(x => x.DiscountPrice).To<T>().ToList();
         }
