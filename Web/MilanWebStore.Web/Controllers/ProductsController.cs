@@ -46,7 +46,7 @@
 
         public IActionResult All([FromQuery] AllProductsQueryModel searchModel, int pageNumber = 1)
         {
-            searchModel.Products = this.productService.FilterByCriteria<ProductInAllViewModel>(searchModel, pageNumber, 2);
+            searchModel.Products = this.productService.FilterByCriteria<ProductInAllViewModel>(searchModel, pageNumber, GlobalConstants.ItemsPerPage);
             searchModel.Sizes = this.sizesService.GetAll<SizeViewModel>();
             searchModel.ChildCategories = this.childCategoriesService.GetAll<ChildCategoryViewModel>();
             searchModel.ParentCategories = this.parentCategoriesService.GetAll<ParentCategoryViewModel>();

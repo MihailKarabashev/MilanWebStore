@@ -20,6 +20,8 @@
 
         public string SearchTerm { get; set; }
 
+        public bool InDiscount { get; set; }
+
         public PagingViewModel Paging { get; set; }
 
         [Display(Name = "Price Range")]

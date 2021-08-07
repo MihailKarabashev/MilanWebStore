@@ -61,6 +61,8 @@
             product.DiscountPrice = model.DiscountPrice;
             product.ParentCategoryId = model.ParentCategoryId;
             product.ChildCategoryId = model.ChildCategoryId;
+            product.InDiscount = !model.DiscountPrice.HasValue ? false : true;
+
 
             this.productsRepository.Update(product);
             await this.productsRepository.SaveChangesAsync();
@@ -186,6 +188,11 @@
         public IEnumerable<T> FilterByCriteria<T>(AllProductsQueryModel model, int page, int itemsPerPage = 2)
         {
             var productsQuery = this.productsRepository.All().AsQueryable();
+
+            if (model.InDiscount)
+            {
+                productsQuery = productsQuery.Where(x => x.InDiscount);
+            }
 
             if (model != null)
             {
