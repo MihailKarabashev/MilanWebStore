@@ -29,7 +29,6 @@
 
         public decimal PriceAfterDiscount { get; set; }
 
-        [Required(ErrorMessage = EmptyFieldLengthError)]
         [Display(Name = DiscountPriceDispayName)]
         [ComparePrice(nameof(Price))]
         public decimal? DiscountPrice { get; set; }

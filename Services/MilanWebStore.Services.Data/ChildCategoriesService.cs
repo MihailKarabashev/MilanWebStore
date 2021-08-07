@@ -23,10 +23,22 @@
 
         public async Task CreateAsync(ChildCategoryInputModel model)
         {
+            var isChildExist = this.childCategoriesRepository.All().Any(x => x.Name == model.Name);
+
+            if (isChildExist)
+            {
+                throw new ArgumentException(string.Format(ExceptionMessages.ChildCategoryAlreadyExist, model.Name));
+            }
+
             var childCategory = new ChildCategory()
             {
                 Name = model.Name,
             };
+
+            childCategory.ParentChildCategory.Add(new ParentChildCategory
+            {
+                ParentCateogryId = model.ParentCategoryId,
+            });
 
             await this.childCategoriesRepository.AddAsync(childCategory);
             await this.childCategoriesRepository.SaveChangesAsync();

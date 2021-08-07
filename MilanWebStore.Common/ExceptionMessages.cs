@@ -35,5 +35,9 @@
         public const string TempDataOrderMessageForEmptyBasket = "To continue add products in basket";
 
         public const string UnsuccessfullPayment = "Your order was unsuccessfully paid";
+
+        public const string ParentCategoryAlreadyExist = "Gender category with name {0} already exsist";
+
+        public const string ChildCategoryAlreadyExist = "Cloth category with name {0} already exsist";
     }
 }

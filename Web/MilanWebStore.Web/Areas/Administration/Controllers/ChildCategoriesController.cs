@@ -1,5 +1,6 @@
 ﻿namespace MilanWebStore.Web.Areas.Administration.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -36,15 +37,22 @@
         {
             if (!this.ModelState.IsValid)
             {
-                var childCategory = new ChildCategoryInputModel()
-                {
-                    ParentCategories = this.parentCategoriesService.GetAll<ParentCategoryViewModel>(),
-                };
-
-                return this.View(childCategory);
+                return this.FillCategoryData();
             }
 
-            await this.childCategoriesService.CreateAsync(model);
+            this.TempData.Remove("ErrorMessage");
+
+            try
+            {
+                await this.childCategoriesService.CreateAsync(model);
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                this.TempData["ErrorMessage"] = "Cloth category with  this name already exsist";
+                return this.FillCategoryData();
+            }
+
 
             return this.RedirectToAction(nameof(this.All));
         }
@@ -87,6 +95,16 @@
             await this.childCategoriesService.DeleteAsync(id);
 
             return this.RedirectToAction(nameof(this.All));
+        }
+
+        private ViewResult FillCategoryData()
+        {
+            var childCategory = new ChildCategoryInputModel()
+            {
+                ParentCategories = this.parentCategoriesService.GetAll<ParentCategoryViewModel>(),
+            };
+
+            return this.View(childCategory);
         }
     }
 }

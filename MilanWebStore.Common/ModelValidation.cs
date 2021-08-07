@@ -78,11 +78,10 @@
         public static class Product
         {
             public const int NameMinLength = 2;
-            public const int NameMaxLength = 50;
-
+            public const int NameMaxLength = 250;
 
             public const int DescriptionMinLength = 10;
-            public const int DescriptionMaxLength = 150;
+            public const int DescriptionMaxLength = 450;
 
             public const string DescriptionError = "Description must be between {2} and {1} symbols";
             public const string ParentCategoryError = "Please select gender category";
@@ -90,14 +89,12 @@
             public const string SizeError = "Please select size";
             public const string ProductVariantError = "Please select product variant";
 
-
             public const string PriceDispayName = "Price";
             public const string SizeDisplayName = "Size Name";
             public const string DiscountPriceDispayName = "Discount price";
             public const string ChildCategoryDisplayName = "Cloth Category";
             public const string ProductVariantDispayName = "Product Variant";
             public const string ParentCategoryDisplayName = "Gender Category";
-
         }
 
         public static class Size
@@ -112,7 +109,7 @@
 
         public static class News
         {
-            public const int TitleMaxLenght = 30;
+            public const int TitleMaxLenght = 40;
         }
 
         public static class User

@@ -14,6 +14,11 @@
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+            {
+                return ValidationResult.Success;
+            }
+
             var discountProperty = (decimal)value;
 
             var property = validationContext.ObjectType.GetProperty(this.ComparisonProperty);

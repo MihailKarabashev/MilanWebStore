@@ -27,18 +27,6 @@
 
         public T GetById<T>(int id)
         {
-            //var ss = this.productsRepository.All().Where(x => x.Id == id)
-            //    .Select(x => new TestProduct
-            //    {
-            //        Name = x.Name,
-            //        ChildCategoryId = x.ChildCategoryId,
-            //        ParentCategoryId = x.ParentCategoryId,
-            //        Price = x.Price,
-            //        Id = x.Id,
-            //        DiscountPrice = x.DiscountPrice,
-            //    })
-            //    .FirstOrDefault();
-
             return this.productsRepository.All().Where(x => x.Id == id)
                 .To<T>().FirstOrDefault();
         }
@@ -115,12 +103,15 @@
                 product.InDiscount = true;
             }
 
-            product.ProductVariants.Add(new ProductVariant
+            foreach (var sizeId in model.SizeIds)
             {
-                ProductId = product.Id,
-                SizeId = model.SizeId,
-                IsSizeAvailable = true,
-            });
+                product.ProductVariants.Add(new ProductVariant
+                {
+                    ProductId = product.Id,
+                    SizeId = sizeId,
+                    IsSizeAvailable = true,
+                });
+            }
 
 
             Directory.CreateDirectory($"{imagePath}/products/");

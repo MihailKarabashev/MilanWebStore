@@ -25,7 +25,6 @@
         [Display(Name = PriceDispayName)]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = EmptyFieldLengthError)]
         [Display(Name = DiscountPriceDispayName)]
         [ComparePrice(nameof(Price))]
         public decimal? DiscountPrice { get; set; }
@@ -40,7 +39,7 @@
 
         [Required(ErrorMessage = SizeError)]
         [Display(Name = SizeDisplayName)]
-        public int SizeId { get; set; }
+        public int[] SizeIds { get; set; }
 
         public IEnumerable<IFormFile> Images { get; set; }
 
