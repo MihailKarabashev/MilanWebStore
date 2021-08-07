@@ -35,6 +35,15 @@
                         </select>
                     </div>
 
+
+                    <div class="form-group">
+                        <label>Sale/Not In Sale</label>
+                        <select class="form-control" asp-for="@Model.InDiscount">
+                            <option value="false" selected>Not In Sale</option>
+                            <option value="true">Sale</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label asp-for="@Model.ChildCategoryId"></label>
                         <select class="form-control" asp-for="@Model.ChildCategoryId" asp-items="@Model.ChildCategories.Select(x=> new SelectListItem(x.Name , x.Id.ToString()))">

@@ -189,10 +189,7 @@
         {
             var productsQuery = this.productsRepository.All().AsQueryable();
 
-            if (model.InDiscount)
-            {
-                productsQuery = productsQuery.Where(x => x.InDiscount);
-            }
+            productsQuery = model.InDiscount ? productsQuery.Where(x => x.InDiscount) : productsQuery.Where(x => !x.InDiscount);
 
             if (model != null)
             {
