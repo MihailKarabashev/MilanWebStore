@@ -16,16 +16,20 @@
 <div class="banner-section spad">
     <div class="container-fluid">
         <div class="row">
-            @foreach (var category in Model.Categories)
+            @foreach (var kit in Model.Kits)
             {
                 <div class="col-lg-4">
                     <div class="single-banner">
-                        <img src="~/img/@category.Name.Replace("Kit",String.Empty).TrimEnd()Jersey.jpg" alt="">
+                        <img src="~/img/@kit.Name.Replace("Kit",String.Empty).TrimEnd()Jersey.jpg" alt="">
                         <div class="inner-text">
-                            <a href="#"><h4>@category.Name.Replace("Kit", String.Empty).ToUpper() MATCH JERSEY</h4></a>
+                            <a asp-area="" asp-controller="Products" asp-action="ById" asp-route-pageNumber="1"
+                               asp-route-categoryId="@kit.ParentCategoryId" asp-route-id="@kit.ProductId"
+                               ><h4>@kit.Name.Replace("Kit", String.Empty).ToUpper() MATCH JERSEY</h4>
+                            </a>
                         </div>
                     </div>
-                </div>}
+                </div>
+              }
         </div>
     </div>
 </div>

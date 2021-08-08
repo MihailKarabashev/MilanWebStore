@@ -10,7 +10,7 @@
     {
         public IEnumerable<ProductInAllViewModel> ProductsInSale { get; set; }
 
-        public IEnumerable<ChildCategoryViewModel> Categories { get; set; }
+        public IEnumerable<ChildKitCategoryViewModel> Kits { get; set; }
 
         public IEnumerable<ProductInAllViewModel> TopProducts { get; set; }
 

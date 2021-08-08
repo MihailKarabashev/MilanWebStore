@@ -31,7 +31,7 @@
             var viewModel = new IndexViewModel()
             {
                 ProductsInSale = this.productsService.GetAllInSale<ProductInAllViewModel>(),
-                Categories = this.childCategoriesService.GetAllKits<ChildCategoryViewModel>(),
+                Kits = this.childCategoriesService.GetAllKits<ChildKitCategoryViewModel>(),
                 TopProducts = this.productsService.GetTopProducts<ProductInAllViewModel>(),
                 ProductOfTheWeek = this.productsService.DealOfTheWeek(),
                 LatestNews = this.newsService.GetTop3LatestNews<SingleNewsViewModel>(),
