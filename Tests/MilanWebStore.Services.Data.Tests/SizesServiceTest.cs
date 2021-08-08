@@ -9,15 +9,12 @@
     using Microsoft.EntityFrameworkCore;
     using MilanWebStore.Common;
     using MilanWebStore.Data;
-    using MilanWebStore.Data.Common.Repositories;
     using MilanWebStore.Data.Models;
     using MilanWebStore.Data.Repositories;
-    using MilanWebStore.Services.Data.Contracts;
     using MilanWebStore.Services.Mapping;
     using MilanWebStore.Web.ViewModels;
     using MilanWebStore.Web.ViewModels.Administration.Sizes;
     using MilanWebStore.Web.ViewModels.Sizes;
-    using Moq;
     using Newtonsoft.Json;
     using Xunit;
 
