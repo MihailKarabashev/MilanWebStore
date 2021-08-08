@@ -40,7 +40,6 @@
             if (size == null)
             {
                 throw new NullReferenceException(string.Format(ExceptionMessages.SizeIdNotFoud, id));
-
             }
 
             size.ModifiedOn = DateTime.UtcNow;
@@ -72,7 +71,14 @@
 
         public T GetById<T>(int id)
         {
-            return this.sizesRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
+            var size = this.sizesRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
+
+            if (size == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.SizeIdNotFoud, id));
+            }
+
+            return size;
         }
     }
 }
