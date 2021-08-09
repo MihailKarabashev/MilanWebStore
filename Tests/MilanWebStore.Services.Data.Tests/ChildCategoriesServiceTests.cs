@@ -1,22 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MilanWebStore.Common;
-using MilanWebStore.Data;
-using MilanWebStore.Data.Models;
-using MilanWebStore.Data.Repositories;
-using MilanWebStore.Services.Mapping;
-using MilanWebStore.Web.ViewModels;
-using Administration =  MilanWebStore.Web.ViewModels.Administration.ChildCategory;
-using MilanWebStore.Web.ViewModels.ChildCategories;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace MilanWebStore.Services.Data.Tests
+﻿namespace MilanWebStore.Services.Data.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using MilanWebStore.Common;
+    using MilanWebStore.Data;
+    using MilanWebStore.Data.Models;
+    using MilanWebStore.Data.Repositories;
+    using MilanWebStore.Services.Mapping;
+    using MilanWebStore.Web.ViewModels;
+    using MilanWebStore.Web.ViewModels.ChildCategories;
+    using Newtonsoft.Json;
+    using Xunit;
+
+    using Administration =  MilanWebStore.Web.ViewModels.Administration.ChildCategory;
+
     public class ChildCategoriesServiceTests
     {
         public ChildCategoriesServiceTests()
