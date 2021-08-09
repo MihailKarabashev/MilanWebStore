@@ -137,7 +137,6 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
 
-
             var childCategory = new ChildCategory { Id = 1, Name = "T-Shirt" };
 
             using var dbContext = new ApplicationDbContext(options);
