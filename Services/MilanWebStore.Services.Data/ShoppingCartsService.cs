@@ -15,32 +15,29 @@
     public class ShoppingCartsService : IShoppingCartsService
     {
         private readonly IDeletableEntityRepository<ShoppingCartProduct> shoppingCartProductsRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
-        private readonly IDeletableEntityRepository<Product> productsRepository;
-        private readonly IRepository<ProductVariant> productVariantsRepository;
+        private readonly IUsersService usersService;
+        private readonly IProductsService productsService;
 
         public ShoppingCartsService(
             IDeletableEntityRepository<ShoppingCartProduct> shoppingCartProductsRepository,
-            IDeletableEntityRepository<ApplicationUser> usersRepository,
-            IDeletableEntityRepository<Product> productsRepository,
-            IRepository<ProductVariant> productVariantsRepository)
+            IUsersService usersService,
+            IProductsService productsService)
         {
             this.shoppingCartProductsRepository = shoppingCartProductsRepository;
-            this.usersRepository = usersRepository;
-            this.productsRepository = productsRepository;
-            this.productVariantsRepository = productVariantsRepository;
+            this.usersService = usersService;
+            this.productsService = productsService;
         }
 
         public async Task AddProductToShoppingCartAsync(int productId, string username, int quantity)
         {
-            var product = await this.productsRepository.All().FirstOrDefaultAsync(v => v.Id == productId);
+            var product = this.productsService.FindById(productId);
 
             if (product == null)
             {
                 throw new NullReferenceException(string.Format(ExceptionMessages.ProductNotFound, productId));
             }
 
-            var user = await this.usersRepository.All().FirstOrDefaultAsync(x => x.UserName == username);
+            var user = this.usersService.GetUser(username);
 
             if (user == null)
             {
@@ -59,7 +56,6 @@
                 Quantity = quantity,
             };
 
-
             await this.shoppingCartProductsRepository.AddAsync(shoppingCartProduct);
             await this.shoppingCartProductsRepository.SaveChangesAsync();
         }
@@ -71,7 +67,8 @@
 
         public async Task ClearShoppingCartAsync(string username)
         {
-            var user = await this.usersRepository.All().FirstOrDefaultAsync(x => x.UserName == username);
+            var user = this.usersService.GetUser(username);
+
             if (user == null)
             {
                 throw new NullReferenceException(string.Format(ExceptionMessages.UserNameNotFound, username));
@@ -101,7 +98,7 @@
                 throw new NullReferenceException(string.Format(ExceptionMessages.ShoppingCartProductIdNotFound, shoppingCartProductId));
             }
 
-            var user = await this.usersRepository.All().FirstOrDefaultAsync(x => x.UserName == username);
+            var user = this.usersService.GetUser(username);
 
             if (user == null)
             {
@@ -122,7 +119,7 @@
                 throw new NullReferenceException(string.Format(ExceptionMessages.ShoppingCartProductIdNotFound, shoppingCartProductId));
             }
 
-            var user = await this.usersRepository.All().FirstOrDefaultAsync(x => x.UserName == username);
+            var user = this.usersService.GetUser(username);
 
             if (user == null)
             {
@@ -141,7 +138,7 @@
 
         public IEnumerable<ShoppingCartProductsViewModel> GetAllShoppingCartProducts(string username)
         {
-            var user = this.usersRepository.All().FirstOrDefault(x => x.UserName == username);
+            var user = this.usersService.GetUser(username);
 
             if (user == null)
             {
