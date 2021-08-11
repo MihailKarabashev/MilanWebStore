@@ -1,6 +1,7 @@
 ﻿namespace MilanWebStore.Services.Data.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -14,6 +15,7 @@
     using MilanWebStore.Services.Data.Contracts;
     using MilanWebStore.Services.Mapping;
     using MilanWebStore.Web.ViewModels;
+    using MilanWebStore.Web.ViewModels.ShoppingCarts;
     using Moq;
     using Xunit;
 
@@ -417,8 +419,9 @@
 
         [Theory]
         [InlineData("1", "username", 1, "Test", 1)]
-        public async Task GetAllShoppingCartProductsShouldWorksCorrectly(string id, string username, int productId, string productName, int quantity)
+        public async Task GetAllShoppingCartProductsShouldThrowNullReferenceExceptionWhenUserWithUsernameIsNotFound(string id, string username, int productId, string productName, int quantity)
         {
+
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
 
@@ -436,6 +439,10 @@
 
             await service.AddProductToShoppingCartAsync(productId, username, quantity);
 
+            var exception = Assert
+                .Throws<NullReferenceException>
+                (() => service.GetAllShoppingCartProducts("FakeUserName"));
+            exception.Message.Should().BeEquivalentTo(string.Format(ExceptionMessages.UserNameNotFound, "FakeUserName"));
         }
 
         private void InitializeMapper() => AutoMapperConfig.
