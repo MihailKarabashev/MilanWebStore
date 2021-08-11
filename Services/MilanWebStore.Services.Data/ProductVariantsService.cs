@@ -14,34 +14,34 @@
     public class ProductVariantsService : IProductVariantsService
     {
         private readonly IDeletableEntityRepository<ProductVariant> productVariantsRepository;
-        private readonly ProductsService productsService;
-        private readonly SizesService sizesService;
+        private readonly IDeletableEntityRepository<Product> productsRepository;
+        private readonly IDeletableEntityRepository<Size> sizesRepository;
 
         public ProductVariantsService(
-            IDeletableEntityRepository<ProductVariant> productVariantsRepository
-            //ProductsService productsService,
-            /*SizesService sizesService*/)
+            IDeletableEntityRepository<ProductVariant> productVariantsRepository,
+            IDeletableEntityRepository<Product> productsRepository,
+            IDeletableEntityRepository<Size> sizesRepository)
         {
             this.productVariantsRepository = productVariantsRepository;
-            //this.productsService = productsService;
-            //this.sizesService = sizesService;
+            this.productsRepository = productsRepository;
+            this.sizesRepository = sizesRepository;
         }
 
         public async Task AddAsync(int sizeId, int productId)
         {
-            //var product = this.productsService.FindById(productId);
+            var product = this.productsRepository.All().Where(x => x.Id == productId).FirstOrDefault();
 
-            //if (product == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.ProductNotFound, productId));
-            //}
+            if (product == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.ProductNotFound, productId));
+            }
 
-            //var size = this.sizesService.GetById<Size>(sizeId);
+            var size = this.sizesRepository.All().Where(x => x.Id == sizeId).FirstOrDefault();
 
-            //if (size == null)
-            //{
-            //    throw new NullReferenceException(string.Format(ExceptionMessages.SizeIdNotFoud, sizeId));
-            //}
+            if (size == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.SizeIdNotFoud, sizeId));
+            }
 
             var productVariant = new ProductVariant()
             {
