@@ -17,7 +17,7 @@
     using Newtonsoft.Json;
     using Xunit;
 
-    using Administration =  MilanWebStore.Web.ViewModels.Administration.ChildCategory;
+    using Administration = MilanWebStore.Web.ViewModels.Administration.ChildCategory;
 
     public class ChildCategoriesServiceTests
     {

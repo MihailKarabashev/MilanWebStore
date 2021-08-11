@@ -1,8 +1,6 @@
 ﻿namespace MilanWebStore.Services.Data.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
 
@@ -15,7 +13,6 @@
     using MilanWebStore.Services.Data.Contracts;
     using MilanWebStore.Services.Mapping;
     using MilanWebStore.Web.ViewModels;
-    using MilanWebStore.Web.ViewModels.ShoppingCarts;
     using Moq;
     using Xunit;
 

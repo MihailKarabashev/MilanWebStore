@@ -115,7 +115,6 @@
                 });
             }
 
-
             Directory.CreateDirectory($"{imagePath}/products/");
             foreach (var image in model.Images)
             {
