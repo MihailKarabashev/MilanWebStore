@@ -1,19 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MilanWebStore.Common;
-using MilanWebStore.Data.Common.Repositories;
-using MilanWebStore.Data.Models;
-using MilanWebStore.Data.Models.Enums;
-using MilanWebStore.Services.Data.Contracts;
-using MilanWebStore.Services.Mapping;
-using MilanWebStore.Web.ViewModels.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MilanWebStore.Services.Data
+﻿namespace MilanWebStore.Services.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using MilanWebStore.Common;
+    using MilanWebStore.Data.Common.Repositories;
+    using MilanWebStore.Data.Models;
+    using MilanWebStore.Data.Models.Enums;
+    using MilanWebStore.Services.Data.Contracts;
+    using MilanWebStore.Services.Mapping;
+    using MilanWebStore.Web.ViewModels.Orders;
+
     public class OrdersService : IOrdersService
     {
         private readonly IDeletableEntityRepository<Order> ordersRepository;
@@ -29,8 +29,7 @@ namespace MilanWebStore.Services.Data
             IShoppingCartsService shoppingCartsService,
             IRepository<OrderProduct> orderProductsRepository,
             IDeletableEntityRepository<Product> productsRepository,
-            IRepository<Address> addressesRepository
-            )
+            IRepository<Address> addressesRepository)
         {
             this.ordersRepository = ordersRepository;
             this.usersService = usersService;
@@ -55,7 +54,6 @@ namespace MilanWebStore.Services.Data
             if (shoppingCartProducts.Count() == 0 || shoppingCartProducts == null)
             {
                 throw new NullReferenceException(string.Format(ExceptionMessages.InvalidShoppingCartProductsQuantity));
-
             }
 
             var orderProductsList = new List<OrderProduct>();
@@ -64,7 +62,6 @@ namespace MilanWebStore.Services.Data
             foreach (var shoppingCartProduct in shoppingCartProducts)
             {
                 var product = this.productsRepository.All().FirstOrDefault(x => x.Id == shoppingCartProduct.ProductId);
-
 
                 var orderProduct = new OrderProduct()
                 {
@@ -84,11 +81,9 @@ namespace MilanWebStore.Services.Data
             order.OrderStatus = OrderStatus.NotDelivered;
             order.PaymentStatus = PaymentStatus.UnPaid;
 
-
             await this.shoppingCartsService.ClearShoppingCartAsync(username);
 
             await this.orderProductsRepository.SaveChangesAsync();
-
         }
 
         public async Task SetOrderDetailsAsync(OrderInputModel input, string username)
@@ -169,7 +164,6 @@ namespace MilanWebStore.Services.Data
             return this.ordersRepository.All().Where(x => x.OrderStatus == OrderStatus.Delivered)
                 .OrderByDescending(x => x.CreatedOn).To<T>().ToList();
         }
-
 
         public async Task ProcessOrder(int id)
         {
