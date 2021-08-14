@@ -25,14 +25,14 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction(nameof(OrdersController.Create));
+                return this.RedirectToAction("Create", "Orders");
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
 
             await this.addressesService.CreateAsync(model, user.Id);
 
-            return this.RedirectToAction(nameof(OrdersController.Create));
+            return this.RedirectToAction("Create", "Orders");
         }
     }
 }
