@@ -109,7 +109,7 @@
 
         public static class News
         {
-            public const int TitleMaxLenght = 40;
+            public const int TitleMaxLenght = 300;
         }
 
         public static class User

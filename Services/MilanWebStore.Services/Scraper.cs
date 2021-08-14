@@ -1,6 +1,7 @@
 ﻿namespace MilanWebStore.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@
             var document = await context.OpenAsync(url);
 
             var main = document.QuerySelector("#tdi_43");
+
             var elements = main.QuerySelectorAll("div.td-block-span12");
             var allNews = new List<News>();
 

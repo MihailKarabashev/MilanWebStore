@@ -24,7 +24,6 @@
             this.usersRepository = usersRepository;
         }
 
-
         public IEnumerable<object> GetTop5MostCommentedProducts()
         {
             return this.queryRunner.

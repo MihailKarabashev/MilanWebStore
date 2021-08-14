@@ -155,7 +155,6 @@
 
             app.UseStatusCodePagesWithRedirects("/Home/NotFound404?statusCode={0}");
 
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -171,8 +170,7 @@
                     new DashboardOptions { Authorization = new[] { new HangfireAuthorizationFilter() } });
 
             app.UseHangfireServer();
-            manager.AddOrUpdate<NewsService>("Scrape", x => x.Scrape(), "*/2 * * * *");
-
+            manager.AddOrUpdate<NewsService>("Scrape", x => x.Scrape(), "0 0 */2 * *");
 
             app.UseEndpoints(
                 endpoints =>
