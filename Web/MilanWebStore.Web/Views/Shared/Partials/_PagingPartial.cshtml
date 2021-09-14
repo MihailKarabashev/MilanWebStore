@@ -9,7 +9,8 @@
            asp-route-childCategoryId="@Model.ChildCategoryId"
            asp-route-sizeId="@Model.SizeId"
            asp-route-filterByPrice="@((int) Model.FilterByPrice)"
-           asp-route-searchTerm="@Model.SearchTerm">
+           asp-route-searchTerm="@Model.SearchTerm"
+           asp-route-InDiscount="@Model.InDiscount">
             Previous
         </a>
     </li>
@@ -24,6 +25,7 @@
                    asp-route-childCategoryId="@Model.ChildCategoryId"
                    asp-route-sizeId="@Model.SizeId"
                    asp-route-filterByPrice="@((int) Model.FilterByPrice)"
+                   asp-route-InDiscount="@Model.InDiscount"
                    asp-route-searchTerm="@Model.SearchTerm">@i </a>
             </li>
         }
@@ -45,6 +47,7 @@
                    asp-route-childCategoryId="@Model.ChildCategoryId"
                    asp-route-sizeId="@Model.SizeId"
                    asp-route-filterByPrice="@((int) Model.FilterByPrice)"
+                   asp-route-InDiscount="@Model.InDiscount"
                    asp-route-searchTerm="@Model.SearchTerm">@i</a>
             </li>
         }
@@ -56,7 +59,8 @@
            asp-route-childCategoryId="@Model.ChildCategoryId"
            asp-route-sizeId="@Model.SizeId"
            asp-route-filterByPrice="@((int) Model.FilterByPrice)"
-           asp-route-searchTerm="@Model.SearchTerm">
+           asp-route-searchTerm="@Model.SearchTerm"
+            asp-route-InDiscount="@Model.InDiscount">
             Next
         </a>
     </li>
